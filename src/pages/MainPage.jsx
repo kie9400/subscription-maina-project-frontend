@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './MainPage.module.css';
+import styles from '../styles/MainPage.module.css';
+import Card from '../components/Card';
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -44,7 +45,7 @@ const MainPage = () => {
                 <h2 className={styles.sectionTitle}>플랫폼 구독 서비스</h2>
                 <div className={styles.platformGrid}>
                     {platforms.map((platform) => (
-                        <div key={platform.platformId} className={styles.platformCard}>
+                        <Card key={platform.platformId}>
                             <img 
                                 src={`${BASE_URL}${platform.platformImage}`}
                                 alt={platform.platformName}
@@ -56,7 +57,7 @@ const MainPage = () => {
                                     평점: {platform.ratingAvg.toFixed(1)}
                                 </div>
                             )}
-                        </div>
+                        </Card>
                     ))}
                 </div>
             </section>
