@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../styles/Header.module.css';
 import Logo from '../assets/images/logo.png';
 
@@ -6,10 +7,12 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.headerWrapper}>
-        <img src={Logo} className={styles.logo} alt="구독매니아 로고" />
+        <Link to="/">
+          <img src={Logo} className={styles.logo} alt="구독매니아 로고" />
+        </Link>
         <nav className={styles.navLinks}>
-          <a href="/login" className={styles.navLink}>로그인</a>
-          <a href="/signup" className={styles.navLink}>회원가입</a>
+          <Link to="/login" className={styles.navLink}>로그인</Link>
+          <Link to="/signup" className={styles.navLink}>회원가입</Link>
         </nav>
       </div>
     </header>
