@@ -3,7 +3,7 @@
 .footer {
     background-color: #f8f9fa;
     color: #333;
-    padding: 2rem 0;
+    padding: 3rem 0;
     width: 100%;
     border-top: 1px solid #e9ecef;
 }
@@ -40,7 +40,7 @@
 }
 
 .copyrightSection {
-    color: #666;
+    color: #666000;
     font-size: 0.8rem;
     text-align: center;
 }
