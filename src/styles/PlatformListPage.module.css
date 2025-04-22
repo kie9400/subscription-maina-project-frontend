@@ -16,7 +16,9 @@
 }
 
 .sidebar {
-  width: 240px;
+  padding-top: 35px ;
+  margin-top: 37px;
+  width: 220px;
   flex-shrink: 0;
 }
 
@@ -53,9 +55,23 @@
   font-size: 14px;
 }
 
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+
 .stars {
-  color: #FFB800;
+  color: #FFD700;
   letter-spacing: 2px;
+  font-size: 12px;
+  -webkit-text-stroke: 0.5px black;
+  -webkit-text-fill-color: #FFD700;
+}
+
+.ratingNumber {
+  font-size: 12px;
 }
 
 .topBar {

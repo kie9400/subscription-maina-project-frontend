@@ -1,32 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
+import { useQuery } from '@tanstack/react-query';
 import SearchBox from '../components/SearchBox';
 import styles from '../styles/PlatformListPage.module.css';
 
 const PlatformListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [platforms, setPlatforms] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [sortBy, setSortBy] = useState('');
-  const [selectedRating, setSelectedRating] = useState('all');
-
-  // 카테고리 목록 가져오기
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await instance.get('/categories');
-        setCategories(response.data.data);
-      } catch (error) {
-        console.error('카테고리 목록 조회 실패:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const [selectedRating, setSelectedRating] = useState(null);
 
   // URL 파라미터 처리
   useEffect(() => {
@@ -34,38 +19,56 @@ const PlatformListPage = () => {
     const category = searchParams.get('categoryId');
     const keyword = searchParams.get('keyword') || '';
     const sort = searchParams.get('sort') || '';
+    const rating = searchParams.get('rating') || null;
 
     setCurrentPage(Number(page));
     setSelectedCategory(category ? Number(category) : null);
     setSearchKeyword(keyword);
     setSortBy(sort);
+    setSelectedRating(rating);
   }, [searchParams]);
 
-  // 플랫폼 목록 가져오기
-  useEffect(() => {
-    const fetchPlatforms = async () => {
-      try {
-        const params = {
-          page: currentPage,
-          size: 12
-        };
+  const { data: categories = [] } = useQuery({
+    queryKey: ['categories'],
+    //캐시가없다면 qureyFn 실행
+    queryFn: async () => {
+      const res = await instance.get('/categories');
+      return res.data.data;
+      console.log("요청함");
+    },
+    staleTime: Infinity,
+  });
 
-        if (searchKeyword) params.keyword = searchKeyword;
-        if (sortBy) params.sort = sortBy;
-        if (selectedCategory) params.categoryId = selectedCategory;
+  const { data: platformData = { data: [], pageInfo: { totalPages: 0 } }, isLoading, error } = useQuery({
+    queryKey: ['platforms', currentPage, selectedCategory, searchKeyword, sortBy, selectedRating],
+    queryFn: async () => {
+      const params = {
+        page: currentPage,
+        size: 12,
+      };
+      if (searchKeyword) params.keyword = searchKeyword;
+      if (sortBy) params.sort = sortBy;
+      if (selectedCategory) params.categoryId = selectedCategory;
+      if (selectedRating) params.rating = selectedRating;
 
-        const queryString = new URLSearchParams(params).toString();
-        const response = await instance.get(`/platforms?${queryString}`);
-        
-        setPlatforms(response.data.data);
-        setTotalPages(response.data.pageInfo.totalPages);
-      } catch (error) {
-        console.error('플랫폼 목록 조회 실패:', error);
-      }
-    };
+      const queryString = new URLSearchParams(params).toString();
+      const res = await instance.get(`/platforms?${queryString}`);
+      return res.data;
+    },
+    keepPreviousData: true,
+  });
 
-    fetchPlatforms();
-  }, [currentPage, selectedCategory, sortBy, searchKeyword]);
+  const platforms = platformData.data;
+  const totalPages = platformData.pageInfo.totalPages;
+
+  if (isLoading) {
+    return <div className={styles.loading}>로딩 중...</div>;
+  }
+
+  if (error) {
+    console.error('데이터 로딩 중 오류 발생:', error);
+    return <div className={styles.error}>데이터를 불러오는데 실패했습니다.</div>;
+  }
 
   const handleSearch = (keyword) => {
     setSearchKeyword(keyword);
@@ -85,6 +88,12 @@ const PlatformListPage = () => {
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
     updateSearchParams({ categoryId, page: 1 });
+  };
+
+  const handleRatingChange = (rating) => {
+    const newRating = selectedRating === rating ? null : rating;
+    setSelectedRating(newRating);
+    updateSearchParams({ rating: newRating, page: 1 });
   };
 
   const updateSearchParams = (newParams) => {
@@ -126,7 +135,7 @@ const PlatformListPage = () => {
                   <input
                     type="checkbox"
                     checked={selectedRating === String(rating)}
-                    onChange={() => setSelectedRating(String(rating))}
+                    onChange={() => handleRatingChange(String(rating))}
                   />
                   <span className={styles.stars}>{'★'.repeat(rating) + '☆'.repeat(5-rating)}</span>
                 </label>
@@ -192,9 +201,23 @@ const PlatformListPage = () => {
                   className={styles.platformImage}
                 />
                 <h3 className={styles.platformName}>{platform.platformName}</h3>
-                {platform.ratingAvg > 0 && (
+                {platform.ratingAvg >= 0 && (
                   <div className={styles.rating}>
-                    평점: {platform.ratingAvg.toFixed(1)}
+                    <span className={styles.stars}>
+                      {Array.from({ length: 5 }, (_, index) => {
+                        const starValue = index + 1;
+                        if (starValue <= platform.ratingAvg) {
+                          return '⭐'; 
+                        } else if (starValue - 0.5 <= platform.ratingAvg) {
+                          return '⭐'; // 반 별
+                        } else {
+                          return '☆'; // 빈 별
+                        }
+                      }).join('')}
+                    </span>
+                    <span className={styles.ratingNumber}>
+                      ({platform.ratingAvg.toFixed(1)})
+                    </span>
                   </div>
                 )}
               </div>

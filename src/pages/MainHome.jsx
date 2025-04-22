@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { instance } from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from '../styles/MainPage.module.css';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +10,10 @@ const BASE_URL = 'http://localhost:8080';
 const MainPage = () => {
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     // React Query로 데이터 가져오기
-    const { data, isLoading, error } = useQuery({
+    const { data, isLoading, error, isSuccess } = useQuery({
         queryKey: ['mainPageData', isLoggedIn], // isLoggedIn이 바뀔 때마다 다시 fetch
         queryFn: async () => {
             const response = await instance.get(`/main`);
@@ -20,6 +21,14 @@ const MainPage = () => {
         }
     });
 
+    //React Query v5에서 useQuery()로부터 isSuccess를 꺼내 쓰려면 직접 구조 분해 해야 한다.
+    useEffect(() => {
+        if (isSuccess && data?.categories) {
+          queryClient.setQueryData(['categories'], data.categories);
+        }
+      }, [isSuccess, data]);
+
+    
     if (isLoading) {
         return <div className={styles.loading}>로딩 중...</div>;
     }
