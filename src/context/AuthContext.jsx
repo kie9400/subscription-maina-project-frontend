@@ -87,14 +87,26 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  const logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
-    instance.defaults.headers.common['Authorization'] = '';
-    setUser(null);
-    setIsLoggedIn(false);
-    setIsAdmin(false);
+  const logout = async () => {
+    try {
+      await instance.post('/auth/logout');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      instance.defaults.headers.common['Authorization'] = '';
+      setUser(null);
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      instance.defaults.headers.common['Authorization'] = '';
+      setUser(null);
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+    }
   };
 
   if (loading) {
