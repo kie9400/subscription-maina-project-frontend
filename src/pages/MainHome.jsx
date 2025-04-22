@@ -3,13 +3,14 @@ import { instance } from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import styles from '../styles/MainPage.module.css';
 import Card from '../components/Card';
-
+import { useNavigate } from 'react-router-dom';
 const BASE_URL = 'http://localhost:8080';
 
 const MainPage = () => {
     const [categories, setCategories] = useState([]);
     const [platforms, setPlatforms] = useState([]);
     const { isLoggedIn } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,6 +37,7 @@ const MainPage = () => {
                                 src={`${BASE_URL}${category.categoryImage}`}
                                 alt={category.categoryName}
                                 className={styles.categoryImage}
+                                onClick={() => navigate(`/platforms?${category.categoryId}`)}
                             />
                             <p className={styles.categoryName}>{category.categoryName}</p>
                         </Card>

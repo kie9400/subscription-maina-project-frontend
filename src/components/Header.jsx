@@ -76,19 +76,20 @@ const Header = () => {
             </button>
             {isMenuOpen && (
               <div className={styles.menuDropdown}>
-                <Link to="/category/movie" className={styles.menuItem}>영화</Link>
-                <Link to="/category/book" className={styles.menuItem}>도서</Link>
-                <Link to="/category/education" className={styles.menuItem}>교육</Link>
-                <Link to="/category/music" className={styles.menuItem}>음악</Link>
-                <Link to="/category/shopping" className={styles.menuItem}>쇼핑</Link>
-                <Link to="/category/delivery" className={styles.menuItem}>배달</Link>
-                <Link to="/category/etc" className={styles.menuItem}>기타</Link>
+                <Link to="/platforms" className={styles.menuItem}>전체</Link>
+                <Link to="/platforms?categoryId=1" className={styles.menuItem}>문화</Link>
+                <Link to="/platforms?categoryId=2" className={styles.menuItem}>도서</Link> 
+                <Link to="/platforms?categoryId=3" className={styles.menuItem}>교육</Link>
+                <Link to="/platforms?categoryId=4" className={styles.menuItem}>음악</Link>
+                <Link to="/platforms?categoryId=5" className={styles.menuItem}>쇼핑</Link>
+                <Link to="/platforms?categoryId=6" className={styles.menuItem}>배달</Link>
+                <Link to="/platforms?categoryId=7" className={styles.menuItem}>기타</Link>
                 {
                   isLoggedIn ? (
                     <>
                       <div className={styles.menuDivider}></div>
                       <Link to="/subscription/register" className={`${styles.menuItem} ${styles.menuItemGray}`}>
-                        구독 등록하기
+                        구독 등록록
                       </Link>
                       <Link to="/mypage" className={`${styles.menuItem} ${styles.menuItemGray}`}>마이페이지</Link>
                     </>
