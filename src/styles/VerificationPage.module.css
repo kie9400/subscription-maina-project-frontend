@@ -1,0 +1,74 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 160px); /* 헤더와 푸터 높이를 고려 */
+}
+
+.signupContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px 40px;
+}
+
+.signupBox {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.emailSection {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.emailSection > div:first-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.emailSection button {
+  height: 48px;
+  margin-top: 24px; /* Input 컴포넌트의 label 높이만큼 margin-top 추가 */
+  white-space: nowrap;
+  min-width: 100px; /* 버튼 최소 너비 설정 */
+}
+
+.verificationSection {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.verificationSection > div:first-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.verificationSection button {
+  height: 48px;
+  margin-top: 24px;
+  white-space: nowrap;
+  min-width: 140px; /* 버튼 최소 너비 설정 */
+} 
