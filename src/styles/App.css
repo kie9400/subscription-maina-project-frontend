@@ -18,15 +18,3 @@ body {
   padding: 0;
 }
 
-.line {
-  width: 100vw;
-  height: 50px;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
-  border: none;
-  position: relative;
-  width: auto;
-  margin-left: -50vw;
-  margin-right: -50vw;
-}

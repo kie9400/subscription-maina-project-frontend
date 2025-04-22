@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import Header from './components/Header';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainHome';
 import LoginPage from './pages/LoginPage';
 import VerificationPage from './pages/VerificationPage';
 import SignupInfoPage from './pages/SignupInfoPage';
 import TermsPage from './pages/TermsPage';
 import Footer from './components/Footer';
+import FindIdPage from './pages/FindIdPage';
+import listIcon from './assets/images/List.png';
 import './styles/App.css';
 
 const queryClient = new QueryClient({
@@ -21,6 +23,7 @@ const queryClient = new QueryClient({
   },
 });
 
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,13 +32,13 @@ function App() {
           <Router>
             <div className="app">
               <Header />
-              <hr className="line" />
               <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<TermsPage />} />
                 <Route path="/signup/email" element={<VerificationPage />} />
                 <Route path="/signup/info" element={<SignupInfoPage />} />
+                <Route path="/find_id" element={<FindIdPage />} />
               </Routes>
               <Footer />
             </div>
