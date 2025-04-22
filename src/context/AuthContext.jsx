@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { instance } from '../api/axiosInstance';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -9,10 +10,22 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const checkTokenAndSetAuth = (accessToken) => {
+    try {
+      const decoded = jwtDecode(accessToken);
+      const roles = decoded.roles || [];
+      const isAdminRole = roles.includes('ADMIN');
+      setIsAdmin(isAdminRole);
+      return decoded;
+    } catch (error) {
+      console.error('토큰 디코딩 실패:', error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        // 먼저 localStorage에서 토큰들과 사용자 정보 확인
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
         const userDataString = localStorage.getItem('user');
@@ -23,16 +36,13 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
-        // 저장된 사용자 정보가 있으면 먼저 설정
-        if (userDataString) {
-          const userData = JSON.parse(userDataString);
-          setUser(userData);
-          setIsLoggedIn(true);
-          setIsAdmin(userData.role === 'ADMIN');
-        }
-
-        // access token이 있으면 Authorization 헤더 설정
         if (accessToken) {
+          const decoded = checkTokenAndSetAuth(accessToken);
+          if (decoded && userDataString) {
+            const userData = JSON.parse(userDataString);
+            setUser(userData);
+            setIsLoggedIn(true);
+          }
           instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         }
 
@@ -45,13 +55,14 @@ export const AuthProvider = ({ children }) => {
         });
 
         if (response.data.accessToken) {
-          localStorage.setItem('accessToken', response.data.accessToken);
-          instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
+          const newAccessToken = response.data.accessToken;
+          localStorage.setItem('accessToken', newAccessToken);
+          instance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+          checkTokenAndSetAuth(newAccessToken);
         }
 
       } catch (error) {
         console.error('Error checking login status:', error);
-        // 토큰 갱신 실패 시 모든 인증 정보 삭제
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
@@ -67,9 +78,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (userData) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      checkTokenAndSetAuth(accessToken);
+    }
     setUser(userData);
     setIsLoggedIn(true);
-    setIsAdmin(userData.role === 'ADMIN');
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
@@ -104,10 +118,11 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// 커스텀 훅
+// AuthContext를 편리하게 꺼내 쓰기 위한 도우미 커스텀 훅
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
+    //AuthProvider로 감싸지 않은 컴포넌트에서 쓰면 에러 발생
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
