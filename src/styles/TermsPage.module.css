@@ -1,0 +1,103 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 160px); /* 헤더와 푸터 높이를 고려 */
+}
+
+.termsContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px 40px;
+}
+
+.termsBox {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.allAgreeSection {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.termsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.termItem {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+}
+
+.termHeader {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.termContent {
+  padding: 16px;
+  height: 200px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.termContent h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+}
+
+.termContent h3:first-child {
+  margin-top: 0;
+}
+
+.termContent p {
+  margin-bottom: 8px;
+  color: #495057;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.buttonSection {
+  margin-top: 32px;
+} 
