@@ -12,7 +12,7 @@ import TermsPage from './pages/TermsPage';
 import Footer from './components/Footer';
 import FindIdPage from './pages/FindIdPage';
 import PlatformListPage from './pages/PlatformListPage';
-import listIcon from './assets/images/List.png';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './styles/App.css';
 
 const queryClient = new QueryClient({
@@ -47,6 +47,7 @@ function App() {
           </Router>
         </AuthProvider>
       </ToastProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
