@@ -11,6 +11,7 @@ import SignupInfoPage from './pages/SignupInfoPage';
 import TermsPage from './pages/TermsPage';
 import Footer from './components/Footer';
 import FindIdPage from './pages/FindIdPage';
+import PlatformListPage from './pages/PlatformListPage';
 import listIcon from './assets/images/List.png';
 import './styles/App.css';
 
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/signup/email" element={<VerificationPage />} />
                 <Route path="/signup/info" element={<SignupInfoPage />} />
                 <Route path="/find_id" element={<FindIdPage />} />
+                <Route path="/platforms" element={<PlatformListPage />} />
               </Routes>
               <Footer />
             </div>
