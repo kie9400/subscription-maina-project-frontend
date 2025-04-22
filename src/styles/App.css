@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 body {
@@ -19,7 +20,7 @@ body {
 
 .line {
   width: 100vw;
-  height: 30px;
+  height: 50px;
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
