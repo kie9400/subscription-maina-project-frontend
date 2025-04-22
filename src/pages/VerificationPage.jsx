@@ -16,6 +16,7 @@ const VerificationPage = () => {
   const [codeError, setCodeError] = useState('');
   const [cooldown, setCooldown] = useState(0);
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailSending, setIsEmailSending] = useState(false);
   const { showToast } = useToast();
 
   //버튼을 누르고 중복 전송을 방지하기 위해 쿨타임 10초준다.
@@ -52,6 +53,8 @@ const VerificationPage = () => {
       return;
     }
 
+    setIsEmailSending(true); // 버튼 즉시 비활성화
+
     try {
       console.log('이메일 전송 시도:', email);
       const response = await instance.post('/members/send-email', { email });
@@ -63,6 +66,7 @@ const VerificationPage = () => {
         setCooldown(10); 
         setEmailError('');
       }
+      setIsEmailSending(false); // 성공 시에도 상태 초기화
     } catch (error) {
       console.error('이메일 전송 에러:', error);
       console.error('에러 상세:', {
@@ -87,6 +91,7 @@ const VerificationPage = () => {
       } else {
         setEmailError('이메일 전송에 실패했습니다. 다시 시도해주세요.');
       }
+      setIsEmailSending(false); // 에러 발생 시 버튼 활성화
     }
   };
 
@@ -136,7 +141,7 @@ const VerificationPage = () => {
               />
               <Button
                 onClick={handleEmailVerification}
-                disabled={!isEmailValid || cooldown > 0}
+                disabled={!isEmailValid || cooldown > 0 || isEmailSending}
                 size="medium"
               >
                 {cooldown > 0 ? `재전송 (${cooldown}s)` : '인증번호 전송'}

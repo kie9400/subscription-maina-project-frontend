@@ -43,15 +43,13 @@
 
 .emailSection > div:first-child {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  min-height: 90px; /* 에러 메시지 공간 확보 */
 }
 
 .emailSection button {
   height: 48px;
-  margin-top: 24px; /* Input 컴포넌트의 label 높이만큼 margin-top 추가 */
+  margin-top: 28px; /* 라벨과 인풋 높이를 고려한 마진 */
   white-space: nowrap;
-  min-width: 100px; /* 버튼 최소 너비 설정 */
 }
 
 .verificationSection {
@@ -64,11 +62,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .verificationSection button {
-  height: 48px;
+  height: 44px;
   margin-top: 24px;
-  white-space: nowrap;
-  min-width: 140px; /* 버튼 최소 너비 설정 */
 } 

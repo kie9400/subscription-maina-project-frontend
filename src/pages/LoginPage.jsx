@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import styles from '../styles/LoginPage.module.css';
-import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login, isLoggedIn } = useAuth();
+  const { showToast } = useToast();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
@@ -61,18 +63,22 @@ const LoginPage = () => {
         role: response.data.role || 'USER' // role이 없을 경우 기본값 설정
       };
       await login(userData);
+      showToast('로그인이 완료되었습니다.');
       navigate('/');
     } catch (err) {
       if (err.response) {
         switch (err.response.status) {
           case 401:
             setPasswordError('이메일 또는 비밀번호가 올바르지 않습니다');
+            showToast('이메일 또는 비밀번호가 올바르지 않습니다.', 'error');
             break;
           default:
             setPasswordError('로그인에 실패했습니다. 다시 시도해주세요');
+            showToast('로그인에 실패했습니다.', 'error');
         }
       } else {
         setPasswordError('서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요');
+        showToast('서버 연결에 실패했습니다.', 'error');
       }
     }
   };
