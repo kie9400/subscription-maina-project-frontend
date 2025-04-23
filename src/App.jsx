@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import FindIdPage from './pages/FindIdPage';
 import PlatformListPage from './pages/PlatformListPage';
 import PlatformDetailPage from './pages/PlatformDetailPage';
+import SubscriptionRegisterPage from './pages/SubscriptionRegisterPage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ScrollToTop from './util/ScrollToTop';
 import './styles/App.css';
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/find_id" element={<FindIdPage />} />
                 <Route path="/platforms" element={<PlatformListPage />} />
                 <Route path="/platforms/:platformId" element={<PlatformDetailPage />} />
+                <Route path="/subscription" element={<SubscriptionRegisterPage />} />
               </Routes>
               <Footer />
             </div>
