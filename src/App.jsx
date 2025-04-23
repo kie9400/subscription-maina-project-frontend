@@ -14,6 +14,8 @@ import FindIdPage from './pages/FindIdPage';
 import PlatformListPage from './pages/PlatformListPage';
 import PlatformDetailPage from './pages/PlatformDetailPage';
 import SubscriptionRegisterPage from './pages/SubscriptionRegisterPage';
+import MyPage from './pages/MyPage';
+import EditProfilePage from './pages/EditProfilePage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ScrollToTop from './util/ScrollToTop';
 import './styles/App.css';
@@ -50,6 +52,8 @@ function App() {
                 <Route path="/platforms" element={<PlatformListPage />} />
                 <Route path="/platforms/:platformId" element={<PlatformDetailPage />} />
                 <Route path="/subscription" element={<SubscriptionRegisterPage />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mypage/edit" element={<EditProfilePage />} />
               </Routes>
               <Footer />
             </div>
