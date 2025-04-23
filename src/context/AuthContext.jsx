@@ -16,6 +16,13 @@ export const AuthProvider = ({ children }) => {
       const roles = decoded.roles || [];
       const isAdminRole = roles.includes('ADMIN');
       setIsAdmin(isAdminRole);
+      
+      // JWT에서 memberId 추출하여 user 상태 업데이트
+      setUser({
+        memberId: decoded.memberId,
+        roles: decoded.roles
+      });
+      
       return decoded;
     } catch (error) {
       console.error('토큰 디코딩 실패:', error);
@@ -28,7 +35,6 @@ export const AuthProvider = ({ children }) => {
       try {
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
-        const userDataString = localStorage.getItem('user');
 
         if (!refreshToken) {
           setIsLoggedIn(false);
@@ -38,9 +44,7 @@ export const AuthProvider = ({ children }) => {
 
         if (accessToken) {
           const decoded = checkTokenAndSetAuth(accessToken);
-          if (decoded && userDataString) {
-            const userData = JSON.parse(userDataString);
-            setUser(userData);
+          if (decoded) {
             setIsLoggedIn(true);
           }
           instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -65,7 +69,6 @@ export const AuthProvider = ({ children }) => {
         console.error('Error checking login status:', error);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        localStorage.removeItem('user');
         setUser(null);
         setIsLoggedIn(false);
         setIsAdmin(false);
@@ -81,10 +84,8 @@ export const AuthProvider = ({ children }) => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       checkTokenAndSetAuth(accessToken);
+      setIsLoggedIn(true);
     }
-    setUser(userData);
-    setIsLoggedIn(true);
-    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = async () => {
