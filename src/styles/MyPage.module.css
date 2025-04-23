@@ -1,0 +1,262 @@
+.pageContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contentContainer {
+  display: flex;
+  gap: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  min-height: 500px;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+  background-color: #f8f9fa;
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #eee;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.profileImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.userName {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+.menu {
+  margin-top: 20px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menuItem:hover {
+  background-color: rgba(0, 109, 255, 0.05);
+}
+
+.menuItem.active {
+  background-color: rgba(0, 109, 255, 0.1);
+  color: #006DFF;
+  border-left: 3px solid #006DFF;
+}
+
+/* 콘텐츠 영역 스타일 */
+.content {
+  flex: 1;
+  padding: 30px;
+}
+
+/* 내 정보 페이지 스타일 */
+.infoContainer {
+  max-width: 800px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.infoCard {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.infoRow:last-child {
+  margin-bottom: 0;
+}
+
+.infoRow label {
+  width: 120px;
+  font-weight: 500;
+  color: #666;
+}
+
+.infoValue {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+}
+
+.phoneInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.withdrawContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.withdrawButton {
+  color: #e74c3c !important;
+  border-color: #e74c3c !important;
+}
+
+.withdrawButton:hover {
+  background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+/* 모달 스타일 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modalContent h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #e74c3c;
+}
+
+.modalContent p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* 구독 내역 및 리뷰 내역 스타일 */
+.subscriptionContainer,
+.reviewContainer {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  min-height: 300px;
+}
+
+/* 로딩 상태 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .contentContainer {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    min-width: auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+  }
+  
+  .profile {
+    padding: 0 20px 20px;
+  }
+  
+  .profileImage {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .infoRow label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+  }
+} 
