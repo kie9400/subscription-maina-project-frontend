@@ -7,7 +7,7 @@ const ConfirmModal = ({ isOpen, message, onConfirm, onCancel }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <p className={styles.message}>{message}</p>
+        <p className={styles.message}><div dangerouslySetInnerHTML={{ __html: message }} /></p>
         <div className={styles.buttonGroup}>
           <button 
             className={`${styles.button} ${styles.confirmButton}`}
