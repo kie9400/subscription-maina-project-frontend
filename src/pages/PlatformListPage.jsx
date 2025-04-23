@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import SearchBox from '../components/SearchBox';
 import styles from '../styles/PlatformListPage.module.css';
 
 const PlatformListPage = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -125,7 +126,7 @@ const PlatformListPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>플랫폼 서비스</h1>
+      <h1 className={styles.title} onClick={() => window.location.href = '/platforms'}>플랫폼 서비스 목록</h1>
       
       <div className={styles.layout}>
         <div className={styles.sidebar}>
@@ -196,7 +197,8 @@ const PlatformListPage = () => {
 
           <div className={styles.platformGrid}>
             {platforms.map((platform) => (
-              <div key={platform.platformId} className={styles.platformCard}>
+              <div key={platform.platformId} className={styles.platformCard} 
+              onClick={() => navigate(`/platforms/${platform.platformId}`)}>
                 <img 
                   src={`${instance.defaults.baseURL}${platform.platformImage}`}
                   alt={platform.platformName} 
@@ -209,9 +211,9 @@ const PlatformListPage = () => {
                       {Array.from({ length: 5 }, (_, index) => {
                         const starValue = index + 1;
                         if (starValue <= platform.ratingAvg) {
-                          return '⭐'; 
+                          return '★'; 
                         } else if (starValue - 0.5 <= platform.ratingAvg) {
-                          return '⭐'; // 반 별
+                          return '★'; // 반 별
                         } else {
                           return '☆'; // 빈 별
                         }
