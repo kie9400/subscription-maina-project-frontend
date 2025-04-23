@@ -9,6 +9,10 @@ import Button from '../components/Button';
 import SignupSteps from '../components/SignupSteps';
 import styles from '../styles/SignupInfoPage.module.css';
 
+const isValidNickname = (name) => name.length >= 2 && name.length <= 8;
+
+
+
 const SignupInfoPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,7 +71,9 @@ const SignupInfoPage = () => {
     if (name === 'phoneNumber') {
       value = formatPhoneNumber(value);
     }
-
+    if (name === 'name' || name === 'password' || name === 'passwordConfirm') {
+      value = value.replace(/\s/g, ''); // 모든 공백 제거
+    }
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -97,6 +103,8 @@ const SignupInfoPage = () => {
 
     if (!formData.name) {
       newErrors.name = '이름을 입력해주세요';
+    }else if (/\s/.test(formData.name)) {
+      newErrors.name = '이름에는 공백을 포함할 수 없습니다';
     }
 
     if (!formData.phoneNumber) {
@@ -138,12 +146,19 @@ const SignupInfoPage = () => {
       // 회원가입 성공 시 로그인 페이지로 이동
       navigate('/login');
     } catch (error) {
-      if (error.response?.status === 409) {
+      if (error.response?.data.message === '이 휴대폰 번호는 이미 존재합니다.') {
         setErrors(prev => ({
           ...prev,
           phoneNumber: '이미 등록된 전화번호입니다'
         }));
-      } else {
+      } 
+      else if (error.response?.data.message === '이미 존재합니다.') {
+        setErrors(prev => ({
+          ...prev,
+          name: '이미 등록된 이름입니다'
+        }));
+      }
+      else {
         // 기타 에러 처리
         console.error('회원가입 에러:', error);
         showToast('회원가입에 실패했습니다.', 'error');
