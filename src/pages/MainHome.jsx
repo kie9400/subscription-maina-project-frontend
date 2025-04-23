@@ -41,6 +41,7 @@ const MainPage = () => {
     // data가 있으면 categories와 platforms 사용
     const categories = data?.categories || [];
     const platforms = data?.platforms || [];
+    const ageBasedPlatforms = data?.ageBasedPlatforms || [];
 
     const handleCategoryClick = (categoryId) => {
         navigate(`/platforms?categoryId=${categoryId}`);
@@ -70,7 +71,7 @@ const MainPage = () => {
 
             <section className={styles.platformSection}>
                 <h2 className={styles.sectionTitle}>
-                    {isLoggedIn ? '맞춤형 추천 구독 서비스' : '인기 구독 서비스'}
+                    인기 구독 서비스 목록
                 </h2>
                 <div className={styles.platformGrid}>
                     {platforms.map((platform) => (
@@ -92,6 +93,37 @@ const MainPage = () => {
                         </Card>
                     ))}
                 </div>
+                {isLoggedIn && (
+                    <>
+                        <h2 className={styles.sectionTitle}>
+                            맞춤형 추천 구독 서비스 목록(나이, 성별)
+                        </h2>
+                        {ageBasedPlatforms.length > 0 ? (
+                            <div className={styles.platformGrid}>
+                                {ageBasedPlatforms.map((platform) => (
+                                    <Card key={platform.platformId} className={styles.platformCard}>
+                                        <img 
+                                            src={`${BASE_URL}${platform.platformImage}`}
+                                            alt={platform.platformName}
+                                            className={styles.platformImage}
+                                        />
+                                        <p className={styles.platformName}>{platform.platformName}</p>
+                                        {platform.ratingAvg >= 0 && (
+                                            <div className={styles.rating}>
+                                                {platform.ratingAvg > 0 
+                                                    ? `평점: ${platform.ratingAvg.toFixed(1)}`
+                                                    : '평점: 없음'
+                                                }
+                                            </div>
+                                        )}
+                                    </Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className={styles.noData}>아직 맞춤형 추천 구독 서비스가 없습니다.</p>
+                        )}
+                    </>
+                )}
             </section>
         </div>
     );
