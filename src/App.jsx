@@ -14,6 +14,7 @@ import FindIdPage from './pages/FindIdPage';
 import PlatformListPage from './pages/PlatformListPage';
 import PlatformDetailPage from './pages/PlatformDetailPage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ScrollToTop from './util/ScrollToTop';
 import './styles/App.css';
 
 const queryClient = new QueryClient({
@@ -37,6 +38,7 @@ function App() {
           <Router>
             <div className="app">
               <Header />
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/login" element={<LoginPage />} />

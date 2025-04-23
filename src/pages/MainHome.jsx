@@ -75,7 +75,8 @@ const MainPage = () => {
                 </h2>
                 <div className={styles.platformGrid}>
                     {platforms.map((platform) => (
-                        <Card key={platform.platformId} className={styles.platformCard}>
+                        <Card key={platform.platformId} className={styles.platformCard}
+                        onClick={() => navigate(`/platforms/${platform.platformId}`)}>
                             <img 
                                 src={`${BASE_URL}${platform.platformImage}`}
                                 alt={platform.platformName}
@@ -101,7 +102,8 @@ const MainPage = () => {
                         {ageBasedPlatforms.length > 0 ? (
                             <div className={styles.platformGrid}>
                                 {ageBasedPlatforms.map((platform) => (
-                                    <Card key={platform.platformId} className={styles.platformCard}>
+                                    <Card key={platform.platformId} className={styles.platformCard}
+                                    onClick={() => navigate(`/platforms/${platform.platformId}`)}>
                                         <img 
                                             src={`${BASE_URL}${platform.platformImage}`}
                                             alt={platform.platformName}
