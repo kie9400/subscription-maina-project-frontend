@@ -69,8 +69,8 @@ const LoginPage = () => {
       if (err.response) {
         switch (err.response.status) {
           case 401:
-            setPasswordError('이메일 또는 비밀번호가 올바르지 않습니다');
-            showToast('이메일 또는 비밀번호가 올바르지 않습니다.', 'error');
+            setPasswordError('가입하지 않은 회원 이거나, 입력하신 정보가 올바르지 않습니다');
+            showToast('가입하지 않은 회원 이거나, 입력하신 정보가 올바르지 않습니다.', 'error');
             break;
           default:
             setPasswordError('로그인에 실패했습니다. 다시 시도해주세요');

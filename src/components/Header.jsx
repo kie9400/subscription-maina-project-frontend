@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useToast } from '../context/ToastContext';
 import styles from '../styles/Header.module.css';
 import Logo from '../assets/images/logo.png';
 import listIcon from '../assets/images/List.png';
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const { showToast } = useToast();
   const { isLoggedIn, isAdmin, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleLogout = async (e) => {
     e.preventDefault();
     await logout();
+    showToast('로그아웃이 완료되었습니다.');
+    navigate('/');
   };
 
   useEffect(() => {
