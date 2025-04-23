@@ -8,9 +8,17 @@
 .reviewHeader {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   margin-bottom: 16px;
   position: relative;
+}
+
+.profileImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #eaeaea;
 }
 
 .reviewerName {

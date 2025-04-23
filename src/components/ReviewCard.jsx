@@ -41,6 +41,11 @@ const ReviewCard = ({ review, onDelete, onEdit, onRecommend }) => {
   return (
     <div className={styles.reviewCard}>
       <div className={styles.reviewHeader}>
+        <img 
+          src={`${instance.defaults.baseURL}${review.memberImage}`} 
+          alt={`${review.memberName}의 프로필`} 
+          className={styles.profileImage}
+        />
         <span className={styles.reviewerName}>{review.memberName}</span>
         <span className={styles.reviewDate}>
           {new Date(review.createdAt).toLocaleDateString()}
@@ -76,7 +81,7 @@ const ReviewCard = ({ review, onDelete, onEdit, onRecommend }) => {
 
       <ConfirmModal
         isOpen={showLoginModal}
-        message="로그인 하셔야 가능합니다. 로그인 페이지로 이동하시겠습니까?"
+        message={"로그인 하셔야 가능합니다. <br/>로그인 페이지로 이동 하시겠습니까?"}
         onConfirm={() => navigate('/login')}
         onCancel={() => setShowLoginModal(false)}
       />
