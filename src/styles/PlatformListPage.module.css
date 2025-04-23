@@ -111,7 +111,7 @@
 }
 
 .platformCard {
-  border: 1px solid #eee;
+  border: 2px solid #eee;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.2s;
@@ -123,6 +123,7 @@
 }
 
 .platformCard:hover {
+  border: 2px solid #FFCC99;
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

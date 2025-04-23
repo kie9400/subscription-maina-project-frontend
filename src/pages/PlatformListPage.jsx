@@ -26,6 +26,8 @@ const PlatformListPage = () => {
     setSearchKeyword(keyword);
     setSortBy(sort);
     setSelectedRating(rating);
+    
+    window.scrollTo(0, 0);
   }, [searchParams]);
 
   const { data: categories = [] } = useQuery({

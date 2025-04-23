@@ -30,6 +30,7 @@
 
 .categoryCard {
     display: flex;
+    border: 2px solid transparent;
     flex-direction: column;
     align-items: center;
     padding: 1.5rem;
@@ -40,7 +41,7 @@
 }
 
 .categoryCard:hover {
-    background-color: #FFCC99;
+    border: 2px solid #FFCC99;
     transform: translateY(-5px);
 }
 
@@ -71,6 +72,7 @@
 }
 
 .platformCard {
+    border: 2px solid transparent;
     width: 100%;
     max-width: 300px;
     background: white;
@@ -84,7 +86,7 @@
 }
 
 .platformCard:hover {
-    background-color: #FFCC99;
+    border: 2px solid #FFCC99;
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
