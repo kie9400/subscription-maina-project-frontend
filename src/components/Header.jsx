@@ -75,7 +75,8 @@ const Header = () => {
               <span>메뉴</span>
             </button>
             {isMenuOpen && (
-              <div className={styles.menuDropdown}>
+              <div className={styles.menuDropdown}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 <Link to="/platforms" className={styles.menuItem}>전체</Link>
                 <Link to="/platforms?categoryId=1" className={styles.menuItem}>문화</Link>
                 <Link to="/platforms?categoryId=2" className={styles.menuItem}>도서</Link> 
@@ -88,8 +89,8 @@ const Header = () => {
                   isLoggedIn ? (
                     <>
                       <div className={styles.menuDivider}></div>
-                      <Link to="/subscription/register" className={`${styles.menuItem} ${styles.menuItemGray}`}>
-                        구독 등록록
+                      <Link to="/subscription" className={`${styles.menuItem} ${styles.menuItemGray}`}>
+                        구독 등록
                       </Link>
                       <Link to="/mypage" className={`${styles.menuItem} ${styles.menuItemGray}`}>마이페이지</Link>
                     </>
