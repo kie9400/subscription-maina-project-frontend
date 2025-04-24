@@ -196,6 +196,7 @@ const MyInfo = ({ data }) => {
 // 내 구독내역 컴포넌트
 const MySubscription = () => {
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const { data: subsData, isLoading: subsLoading } = useQuery({
     queryKey: ['mypage', 'subscription'],
@@ -205,6 +206,10 @@ const MySubscription = () => {
     },
     enabled: isLoggedIn
   });
+
+  const handleSubscriptionClick = (subscriptionId) => {
+    navigate(`/subscription/${subscriptionId}`);
+  };
 
   if (subsLoading) {
     return <div className={styles.loading}>로딩 중...</div>;
@@ -240,7 +245,11 @@ const MySubscription = () => {
             
             <div className={styles.platformGrid}>
               {category.subscriptions.map((subscription) => (
-                <div key={subscription.subscriptionId} className={styles.platformCard}>
+                <div 
+                  key={subscription.subscriptionId} 
+                  className={styles.platformCard}
+                  onClick={() => handleSubscriptionClick(subscription.subscriptionId)}
+                >
                   <div className={styles.platformImgWrapper}>
                     <img 
                       src={`${instance.defaults.baseURL}${subscription.platformImage}`} 

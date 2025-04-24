@@ -83,6 +83,7 @@ const DeleteMemberPage = () => {
 
       if (response.status === 204) {
         localStorage.removeItem('token');
+        localStorage.setItem('isLoggingOut', 'true');
         showToast('회원 탈퇴가 완료되었습니다.');
         navigate('/login');
         logout();

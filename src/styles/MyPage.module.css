@@ -1,7 +1,7 @@
 .pageContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 0px;
 }
 
 .pageTitle {
@@ -94,7 +94,7 @@
 
 /* 내 정보 페이지 스타일 */
 .infoContainer {
-  max-width: 800px;
+  max-width: 820px;
 }
 
 .sectionTitle {
