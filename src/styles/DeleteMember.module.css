@@ -1,0 +1,158 @@
+.pageContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #333;
+}
+
+.contentBox {
+  background-color: #fff;
+  border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.contentBox h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.noticeSection {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+  0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.noticeTitle {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.noticeContent {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.noticeContent p {
+  margin-bottom: 8px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.agreementSection {
+  margin-top: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  color: #333;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modalContent h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.passwordInputWrapper {
+  position: relative;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  transform: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px 8px;
+  font-size: 14px;
+  z-index: 1;
+}
+  
+.passwordToggle:hover {
+  color: #333;
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+} 
