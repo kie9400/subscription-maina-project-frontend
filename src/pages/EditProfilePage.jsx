@@ -28,12 +28,11 @@ const EditProfilePage = () => {
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   
   // 로그인 상태 확인
-  useEffect(() => {
-    if (!isLoggedIn) {
-      showToast('로그인이 필요한 서비스입니다.', 'error');
-      navigate('/login');
-    }
-  }, [isLoggedIn, navigate, showToast]);
+  if (!isLoggedIn && !localStorage.getItem('isLoggingOut')) {
+    showToast('로그인이 필요한 서비스입니다.', 'error');
+    navigate('/login');
+    return null; 
+  }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

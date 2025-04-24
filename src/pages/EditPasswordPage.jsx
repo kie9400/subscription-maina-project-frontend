@@ -32,12 +32,11 @@ const EditPasswordPage = () => {
   });
 
   // 로그인 상태 확인
-  useEffect(() => {
-    if (!isLoggedIn) {
-      showToast('로그인이 필요한 서비스입니다.', 'error');
-      navigate('/login');
-    }
-  }, [isLoggedIn, navigate, showToast]);
+  if (!isLoggedIn && !localStorage.getItem('isLoggingOut')) {
+    showToast('로그인이 필요한 서비스입니다.', 'error');
+    navigate('/login');
+    return null; 
+  }
 
   useEffect(() => {
     if (formData.passwordConfirm && formData.newPassword !== formData.passwordConfirm) {

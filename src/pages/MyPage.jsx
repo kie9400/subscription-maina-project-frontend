@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
@@ -13,13 +13,11 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState('info');
 
-  // 로그인 상태 확인
-  useEffect(() => {
-    if (!isLoggedIn) {
-      showToast('로그인이 필요한 서비스입니다.', 'error');
-      navigate('/login');
-    }
-  }, [isLoggedIn, navigate, showToast]);
+  if (!isLoggedIn && !localStorage.getItem('isLoggingOut')) {
+    showToast('로그인이 필요한 서비스입니다.', 'error');
+    navigate('/login');
+    return null; 
+  }
 
   // 마이페이지 기본 정보 (이름, 이미지) 조회
   const { data: profileData, isLoading: profileLoading } = useQuery({
@@ -108,142 +106,84 @@ const MyPage = () => {
 
 // 내 정보 컴포넌트
 const MyInfo = ({ data }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(data?.phoneNumber || '');
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      setPhoneNumber(data.phoneNumber || '');
-    }
-  }, [data]);
-
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
-    if (isEditing) {
-      setPhoneNumber(data?.phoneNumber || '');
-    }
-  };
-
-  const handlePhoneChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
 
   const handleEditProfile = () => {
     navigate('/mypage/edit');
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      await instance.patch('/mypage/info', { phoneNumber });
-      showToast('정보가 성공적으로 수정되었습니다.');
-      setIsEditing(false);
-    } catch (error) {
-      showToast('정보 수정에 실패했습니다.', 'error');
-    }
-  };
-
   const handlePasswordChange = () => {
-    // 비밀번호 변경 페이지로 이동하거나 모달 표시
-    showToast('비밀번호 변경 기능은 준비 중입니다.');
+    navigate('/mypage/password');
   };
 
-  const handleWithdraw = async () => {
-    try {
-      await instance.delete('/member');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      showToast('회원 탈퇴가 완료되었습니다.');
-      navigate('/');
-    } catch (error) {
-      showToast('회원 탈퇴에 실패했습니다.', 'error');
-    }
+  const handleDeleteMember = () => {
+    navigate('/mypage/delete');
   };
 
   return (
     <div className={styles.infoContainer}>
       <h2 className={styles.sectionTitle}>내 정보</h2>
       
-      <form onSubmit={handleSubmit}>
-        <div className={styles.infoCard}>
-          <div className={styles.infoRow}>
-            <label>이메일</label>
-            <div className={styles.infoValue}>{data?.email || ''}</div>
-          </div>
-          
-          <div className={styles.infoRow}>
-            <label>성별</label>
-            <div className={styles.infoValue}>
-              {data?.gender === 'MALE' ? '남자' : 
-               data?.gender === 'FEMALE' ? '여자' : ''}
-            </div>
-          </div>
-          
-          <div className={styles.infoRow}>
-            <label>나이</label>
-            <div className={styles.infoValue}>{data?.age || ''}</div>
-          </div>
-          
-          <div className={styles.infoRow}>
-            <label>가입일</label>
-            <div className={styles.infoValue}>
-              {data?.createdAt ? new Date(data.createdAt).toLocaleDateString() : ''}
-            </div>
-          </div>
-          
-          <div className={styles.infoRow}>
-            <label>휴대폰 번호</label>
-            {isEditing ? (
-              <input
-                type="text"
-                value={phoneNumber}
-                onChange={handlePhoneChange}
-                className={styles.phoneInput}
-                placeholder="휴대폰 번호를 입력하세요"
-              />
-            ) : (
-              <div className={styles.infoValue}>{data?.phoneNumber || ''}</div>
-            )}
+      <div className={styles.infoCard}>
+        <div className={styles.infoRow}>
+          <label>이메일</label>
+          <div className={styles.infoValue}>{data?.email || ''}</div>
+        </div>
+        
+        <div className={styles.infoRow}>
+          <label>성별</label>
+          <div className={styles.infoValue}>
+            {data?.gender === 'MALE' ? '남자' : 
+             data?.gender === 'FEMALE' ? '여자' : ''}
           </div>
         </div>
         
-        <div className={styles.buttonGroup}>
-          {isEditing ? (
-            <>
-              <Button type="submit">저장</Button>
-              <Button type="button" variant="secondary" onClick={handleEditToggle}>취소</Button>
-            </>
-          ) : (
-            <>
-              <Button type="button" onClick={handleEditProfile}>회원정보 수정</Button>
-              <Button type="button" onClick={handlePasswordChange}>비밀번호 변경</Button>
-            </>
-          )}
+        <div className={styles.infoRow}>
+          <label>나이</label>
+          <div className={styles.infoValue}>{data?.age || ''}</div>
         </div>
         
-        <div className={styles.withdrawContainer}>
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={() => setShowConfirmModal(true)}
-            className={styles.withdrawButton}
-          >
-            회원 탈퇴
-          </Button>
+        <div className={styles.infoRow}>
+          <label>가입일</label>
+          <div className={styles.infoValue}>
+            {data?.createdAt ? new Date(data.createdAt).toLocaleDateString() : ''}
+          </div>
         </div>
-      </form>
+        
+        <div className={styles.infoRow}>
+          <label>휴대폰 번호</label>
+          <div className={styles.infoValue}>{data?.phoneNumber || ''}</div>
+        </div>
+      </div>
       
+      <div className={styles.buttonGroup}>
+        <Button type="button" onClick={handleEditProfile}>회원정보 수정</Button>
+        <Button type="button" onClick={handlePasswordChange}>비밀번호 변경</Button>
+      </div>
+      
+      <div className={styles.withdrawContainer}>
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={() => setShowConfirmModal(true)}
+          className={styles.withdrawButton}
+        >
+          회원 탈퇴
+        </Button>
+      </div>
+
       {showConfirmModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
-            <h3>정말로 탈퇴하시겠습니까?</h3>
-            <p>탈퇴 이후 6개월이 지나면 모든 개인정보가 삭제되며 복구가 불가능 합니다.</p>
+            <h3>정말로 탈퇴를 진행하시겠습니까?</h3>
+            <p>탈퇴 진행 시 추가 인증이 필요합니다.</p>
             <div className={styles.modalActions}>
-              <Button onClick={handleWithdraw}>탈퇴</Button>
+              <Button onClick={() => {
+                setShowConfirmModal(false);
+                handleDeleteMember();
+              }} variant="danger">탈퇴 진행</Button>
               <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>취소</Button>
             </div>
           </div>

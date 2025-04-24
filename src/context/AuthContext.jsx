@@ -90,23 +90,27 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await instance.post('/auth/logout');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
-      instance.defaults.headers.common['Authorization'] = '';
-      setUser(null);
-      setIsLoggedIn(false);
-      setIsAdmin(false);
+      const response = await instance.post('/auth/logout');
+      if (response.status === 200) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('isLoggingOut');
+        instance.defaults.headers.common['Authorization'] = '';
+        setUser(null);
+        setIsLoggedIn(false);
+        setIsAdmin(false);
+      }
     } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
+      console.error('로그아웃 중 오류가 발생했습니다:', error);
+      // 오류가 발생해도 로컬 상태는 초기화
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
+      localStorage.removeItem('isLoggingOut');
       instance.defaults.headers.common['Authorization'] = '';
       setUser(null);
       setIsLoggedIn(false);
       setIsAdmin(false);
+      throw error;
     }
   };
 

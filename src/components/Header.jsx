@@ -15,6 +15,7 @@ const Header = () => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
+    localStorage.setItem('isLoggingOut', 'true');
     await logout();
     showToast('로그아웃이 완료되었습니다.');
     navigate('/');
