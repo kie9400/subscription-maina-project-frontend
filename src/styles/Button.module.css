@@ -36,6 +36,14 @@
   background-color: #BFBFBF;
 }
 
+.error {
+  background-color: #FF6000;
+}
+
+.error:hover {
+  background-color: #F00000;
+}
+
 .outline {
   background-color: transparent;
   border: 2px solid #FF6B00;
