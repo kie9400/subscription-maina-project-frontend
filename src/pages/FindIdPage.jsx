@@ -49,10 +49,14 @@ const FindIdPage = () => {
     } catch (error) {
       if (error.response?.status === 404) {
         setError('등록되지 않은 전화번호입니다');
-      } else {
+        showToast('등록되지 않은 전화번호입니다.', 'error');
+      } else if(error.response?.status === 409){
+        setError('찾으시는 회원은 탈퇴된 회원입니다.');
+        showToast('찾으시는 회원은 탈퇴된 회원입니다.', 'error');
+      }else {
         setError('아이디 찾기에 실패했습니다. 다시 시도해주세요');
+        showToast('아이디 찾기에 실패했습니다.', 'error');
       }
-      showToast('아이디 찾기에 실패했습니다.', 'error');
     }
   };
 
