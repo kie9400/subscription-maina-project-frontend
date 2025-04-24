@@ -215,7 +215,11 @@ const MySubscription = () => {
     return <div className={styles.loading}>로딩 중...</div>;
   }
 
-  if (!subsData) {
+  if (!subsData || 
+      !subsData.categories || 
+      subsData.categories.length === 0 || 
+      subsData === "" || 
+      Object.keys(subsData).length === 0) {
     return <div className={styles.emptyState}>구독 내역이 없습니다.</div>;
   }
 
