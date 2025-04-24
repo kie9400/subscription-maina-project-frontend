@@ -16,12 +16,12 @@ const SubscriptionEditPage = () => {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
   
-  // 상태 관리
+  // 모달 컴포넌트에서 뽑아올 상태 관리
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [subscriptionDate, setSubscriptionDate] = useState('');
   const [showPlatformModal, setShowPlatformModal] = useState(false);
 
-  // 권한 체크
+  // 로그인 상태 확인
   if (!isLoggedIn && !localStorage.getItem('isLoggingOut')) {
     showToast('로그인이 필요한 서비스입니다.', 'error');
     navigate('/login');
@@ -66,6 +66,13 @@ const SubscriptionEditPage = () => {
   // 플랜 선택 핸들러
   const handlePlanSelect = (plan) => {
     setSelectedPlan(plan.subsPlanId);
+  };
+
+  // 모달에서 플랫폼 선택 시 처리
+  const handlePlatformSelect = (platform) => {
+    setSelectedPlatform(platform);
+    setSelectedPlan(null);
+    setShowPlatformModal(false);
   };
 
   // 구독 정보 수정 mutation
@@ -204,7 +211,7 @@ const SubscriptionEditPage = () => {
         <PlatformSearchModal
           isOpen={showPlatformModal}
           onClose={() => setShowPlatformModal(false)}
-          onSelect={handleSelectPlatform}
+          onSelect={handlePlatformSelect}
         />
       )}
     </div>
