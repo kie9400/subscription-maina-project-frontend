@@ -1,7 +1,7 @@
 .pageContainer {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 0px;
 }
 
 .pageTitle {
@@ -14,7 +14,7 @@
 .contentContainer {
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 30px;
 }
 
@@ -40,12 +40,13 @@
 .platformDetails {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   gap: 30px;
 }
 
 .platformImageContainer {
   flex-shrink: 0;
-  width: 360px;
+  width: 440px;
   height: 300px;
   display: flex;
   align-items: center;
@@ -53,6 +54,7 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #eee;
   padding: 10px;
 }
@@ -64,8 +66,8 @@
 }
 
 .subscriptionDetails {
-  flex: 1;
-  min-width: 00;
+  width: 100%;
+  min-width: 0;
 }
 
 .detailRow {
@@ -76,6 +78,7 @@
   padding: 10px 15px;
   border-radius: 6px;
   background-color: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .detailRow:last-child {

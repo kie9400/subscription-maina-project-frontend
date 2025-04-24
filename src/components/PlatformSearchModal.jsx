@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { instance } from '../api/axiosInstance';
 import styles from '../styles/SubscriptionRegisterPage.module.css';
 
 const PlatformSearchModal = ({ isOpen, onClose, onSelect }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
+
+    // 카테고리 목록 조회
+    const { data: categories = [] } = useQuery({
+      queryKey: ['categories'],
+      queryFn: async () => {
+        const res = await instance.get('/categories');
+        return res.data.data;
+      }
+    });
 
     // 플랫폼 검색 쿼리
     const { data: platformData = { data: [], pageInfo: { totalPages: 0 } }, isLoading } = useQuery({
