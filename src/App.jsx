@@ -18,6 +18,8 @@ import MyPage from './pages/MyPage';
 import EditPasswordPage from './pages/EditPasswordPage';
 import EditProfilePage from './pages/EditProfilePage';
 import DeleteMemberPage from './pages/DeleteMemberPage';
+import SubscriptionDetailPage from './pages/SubscriptionDetailPage';
+import SubscriptionEditPage from './pages/SubscriptionEditPage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ScrollToTop from './util/ScrollToTop';
 import './styles/App.css';
@@ -54,6 +56,8 @@ function App() {
                 <Route path="/platforms" element={<PlatformListPage />} />
                 <Route path="/platforms/:platformId" element={<PlatformDetailPage />} />
                 <Route path="/subscription" element={<SubscriptionRegisterPage />} />
+                <Route path="/subscription/:subscriptionId" element={<SubscriptionDetailPage />} />
+                <Route path="/subscription/:subscriptionId/edit" element={<SubscriptionEditPage />} />
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/mypage/edit" element={<EditProfilePage />} />
                 <Route path="/mypage/password" element={<EditPasswordPage />} />
