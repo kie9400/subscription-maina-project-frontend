@@ -97,6 +97,9 @@ const MyPage = () => {
         
         {/* 오른쪽 콘텐츠 영역 */}
         <div className={styles.content}>
+          {activeMenu === 'info' && <h2 className={styles.sectionTitle}>내 정보</h2>}
+          {activeMenu === 'subscription' && <h2 className={styles.sectionTitle}>내 구독내역</h2>}
+          {activeMenu === 'review' && <h2 className={styles.sectionTitle}>내 리뷰내역</h2>}
           {renderContent()}
         </div>
       </div>
@@ -106,7 +109,6 @@ const MyPage = () => {
 
 // 내 정보 컴포넌트
 const MyInfo = ({ data }) => {
-  const { showToast } = useToast();
   const navigate = useNavigate();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -124,8 +126,6 @@ const MyInfo = ({ data }) => {
 
   return (
     <div className={styles.infoContainer}>
-      <h2 className={styles.sectionTitle}>내 정보</h2>
-      
       <div className={styles.infoCard}>
         <div className={styles.infoRow}>
           <label>이메일</label>
@@ -193,12 +193,75 @@ const MyInfo = ({ data }) => {
   );
 };
 
-// 내 구독내역 컴포넌트 (나중에 구현)
+// 내 구독내역 컴포넌트
 const MySubscription = () => {
+  const { isLoggedIn } = useAuth();
+
+  const { data: subsData, isLoading: subsLoading } = useQuery({
+    queryKey: ['mypage', 'subscription'],
+    queryFn: async () => {
+      const response = await instance.get('/mypage/subs');
+      return response.data.data;
+    },
+    enabled: isLoggedIn
+  });
+
+  if (subsLoading) {
+    return <div className={styles.loading}>로딩 중...</div>;
+  }
+
+  if (!subsData) {
+    return <div className={styles.emptyState}>구독 내역이 없습니다.</div>;
+  }
+
   return (
     <div className={styles.subscriptionContainer}>
-      <h2 className={styles.sectionTitle}>내 구독내역</h2>
-      <p>구독 내역 페이지는 준비 중입니다.</p>
+      <div className={styles.subSummary}>
+        <div className={styles.totalPriceBox}>
+          <span className={styles.totalPriceLabel}>월 구독 총요금 : </span>
+          <span className={styles.totalPrice}>{subsData.totalMonthlyPrice.toLocaleString()}원</span>
+        </div>
+      </div>
+      
+      <div className={styles.categoryList}>
+        {subsData.categories.map((category, categoryIndex) => (
+          <div key={categoryIndex} className={styles.categorySection}>
+            <div className={styles.categoryHeader}>
+              <div className={styles.categoryInfo}>
+                <img 
+                  src={`${instance.defaults.baseURL}${category.categoryImage}`} 
+                  alt={category.categoryName} 
+                  className={styles.categoryImage} 
+                />
+                <span className={styles.categoryName}>{category.categoryName}</span>
+                <span className={styles.categoryPrice}>총 요금 {category.categoryTotalPrice.toLocaleString()}원</span>
+              </div>
+            </div>
+            
+            <div className={styles.platformGrid}>
+              {category.subscriptions.map((subscription) => (
+                <div key={subscription.subscriptionId} className={styles.platformCard}>
+                  <div className={styles.platformImgWrapper}>
+                    <img 
+                      src={`${instance.defaults.baseURL}${subscription.platformImage}`} 
+                      alt={subscription.platformName} 
+                      className={styles.platformImage} 
+                    />
+                  </div>
+                  <div className={styles.platformInfo}>
+                    <div className={styles.platformName}>{subscription.platformName}</div>
+                    <div className={styles.planName}>{subscription.planName}</div>
+                    <div className={styles.monthlyFee}>
+                      <span className={styles.billingCycle}>{subscription.billingCycle}</span>
+                      <span className={styles.price}>{subscription.price.toLocaleString()}원</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -207,7 +270,6 @@ const MySubscription = () => {
 const MyReview = () => {
   return (
     <div className={styles.reviewContainer}>
-      <h2 className={styles.sectionTitle}>내 리뷰내역</h2>
       <p>리뷰 내역 페이지는 준비 중입니다.</p>
     </div>
   );

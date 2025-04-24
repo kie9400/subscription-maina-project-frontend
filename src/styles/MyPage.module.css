@@ -259,4 +259,184 @@
   .buttonGroup {
     flex-direction: column;
   }
+}
+
+/* 구독내역 관련 스타일 */
+.subscriptionContainer {
+  width: 100%;
+}
+
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 16px;
+  color: #888;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  margin: 20px 0;
+}
+
+.subSummary {
+  margin: 10px 0;
+  text-align: right;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.totalPriceBox {
+  display: inline-block;
+}
+
+.totalPriceLabel {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.totalPrice {
+  font-size: 20px;
+  font-weight: 700;
+  color: #006DFF;
+  margin-left: 5px;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.categorySection {
+  margin-bottom: 20px;
+}
+
+.categoryHeader {
+  margin-bottom: 15px;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+}
+
+.categoryImage {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  border-radius: 0;
+}
+
+.categoryName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-right: 8px;
+}
+
+.categoryPrice {
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  margin-left: 10px;
+}
+
+.platformGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.platformCard {
+  width: calc(50% - 10px);
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  cursor: pointer;
+  background-color: #fff;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.platformCard:hover{
+  border: 2px solid #FFCC99;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15),
+              0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.platformImgWrapper {
+  width: 115px;
+  height: 115px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.platformImage {
+  width: 115px;
+  height: 115px;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.platformInfo {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.platformName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.planName {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.monthlyFee {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.billingCycle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff6b6b;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff6b6b;
+}
+
+@media (max-width: 768px) {
+  .platformGrid {
+    flex-direction: column;
+  }
+  
+  .platformCard {
+    width: 100%;
+  }
+
+  .platformCard:hover{
+    border: 2px solid #FFCC99;
+    transform: translateY(-5px);
+  }
 } 
