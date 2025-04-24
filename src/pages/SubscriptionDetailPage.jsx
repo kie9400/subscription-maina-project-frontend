@@ -170,6 +170,7 @@ const SubscriptionDetailPage = () => {
                 src={`${instance.defaults.baseURL}${data.platformImage}`} 
                 alt={data.platformName} 
                 className={styles.platformImage}
+                onClick={() => navigate(`/platforms/${data.platformId}`)}
               />
             </div>
             
@@ -205,6 +206,9 @@ const SubscriptionDetailPage = () => {
               </div>
             </div>
           </div>
+          <p className={styles.calendarNote}>
+            ※ 플랫폼 이미지를 클릭하면 <span className={styles.highlightDate}>플랫폼 페이지</span>로 이동합니다.
+          </p>
         </div>
         
         <div className={styles.calendarContainer}>

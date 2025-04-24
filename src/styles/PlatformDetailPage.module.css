@@ -22,9 +22,11 @@
 .platformImage {
   width: 300px;
   height: 250px;
-  border: 1px solid #D9D9D9;
+  background: #f8f9fa;  background: #f8f9fa;
   object-fit: contain;
   border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .platformDetails {
@@ -34,7 +36,7 @@
 .platformName {
   font-size: 32px;
   font-weight: 700;
-  color: #333;
+  color: #ff6b6b;
   margin-bottom: 16px;
 }
 
