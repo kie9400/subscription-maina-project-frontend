@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -11,15 +11,20 @@ const EditProfilePage = () => {
   const { isLoggedIn } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const fileInputRef = useRef();
   
+  // 기존 사용자 데이터 가져오기
+  const existingData = queryClient.getQueryData(['mypage', 'profile']);
+  const existingInfoData = queryClient.getQueryData(['mypage', 'info']);
+  
   // 상태 관리
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
+  const [name, setName] = useState(existingData?.name || '');
+  const [age, setAge] = useState(existingInfoData?.age || '');
+  const [gender, setGender] = useState(existingInfoData?.gender || '');
   const [profileImage, setProfileImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [imagePreview, setImagePreview] = useState(existingData?.image ? `${instance.defaults.baseURL}${existingData.image}` : '');
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   
   // 로그인 상태 확인
@@ -29,53 +34,6 @@ const EditProfilePage = () => {
       navigate('/login');
     }
   }, [isLoggedIn, navigate, showToast]);
-
-  // 마이페이지 기본 정보 (이름, 이미지) 조회
-  const { data: profileData, isLoading: profileLoading } = useQuery({
-    queryKey: ['mypage', 'profile'],
-    queryFn: async () => {
-      const response = await instance.get('/mypage');
-      return response.data.data;
-    },
-    enabled: isLoggedIn,
-    onSuccess: (data) => {
-      setName(data.name || '');
-      setImagePreview(data.image ? `${instance.defaults.baseURL}${data.image}` : '');
-    }
-  });
-
-  // 내 상세 정보 조회
-  const { data: myInfoData, isLoading: infoLoading } = useQuery({
-    queryKey: ['mypage', 'info'],
-    queryFn: async () => {
-      const response = await instance.get('/mypage/info');
-      return response.data.data;
-    },
-    enabled: isLoggedIn,
-    onSuccess: (data) => {
-      setAge(data.age || '');
-      setGender(data.gender || '');
-    }
-  });
-
-  // 프로필 업데이트 뮤테이션
-  const updateProfileMutation = useMutation({
-    mutationFn: async (formData) => {
-      return await instance.patch('/mypage/profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['mypage']);
-      showToast('프로필이 성공적으로 업데이트되었습니다.');
-      navigate('/mypage');
-    },
-    onError: (error) => {
-      showToast('프로필 업데이트에 실패했습니다: ' + (error.response?.data?.message || '오류가 발생했습니다.'), 'error');
-    }
-  });
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -100,26 +58,51 @@ const EditProfilePage = () => {
     e.preventDefault();
     
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('age', age);
-    formData.append('gender', gender);
-    formData.append('deleteImage', isImageDeleted);
     
+    // JSON 데이터 생성
+    const jsonData = {
+      name: name,
+      age: age,
+      gender: gender
+    };
+    
+    // JSON 데이터를 Blob으로 변환하여 추가
+    const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
+    formData.append('data', jsonBlob);
+    
+    // 이미지 파일 추가
     if (profileImage) {
       formData.append('profileImage', profileImage);
     }
     
+    // 이미지 삭제 여부 추가
+    formData.append('imageDeleted', isImageDeleted);
+    
     updateProfileMutation.mutate(formData);
   };
+
+  // 프로필 업데이트 뮤테이션
+  const updateProfileMutation = useMutation({
+    mutationFn: async (formData) => {
+      return await instance.patch('/members', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['mypage']);
+      showToast('프로필이 성공적으로 업데이트되었습니다.');
+      navigate('/mypage');
+    },
+    onError: (error) => {
+      showToast('프로필 업데이트에 실패했습니다: ' + (error.response?.data?.message || '오류가 발생했습니다.'), 'error');
+    }
+  });
 
   const handleCancel = () => {
     navigate('/mypage');
   };
-
-  // 로딩 상태 확인
-  if (profileLoading || infoLoading) {
-    return <div className={styles.loading}>로딩 중...</div>;
-  }
 
   return (
     <div className={styles.pageContainer}>
@@ -143,15 +126,13 @@ const EditProfilePage = () => {
                 >
                   <span>+</span>
                 </button>
-                {(imagePreview || profileData?.image) && !isImageDeleted && (
-                  <button 
-                    type="button"
-                    className={styles.imageDeleteButton}
-                    onClick={handleImageDelete}
-                  >
-                    <span>×</span>
-                  </button>
-                )}
+                <button 
+                  type="button"
+                  className={styles.imageDeleteButton}
+                  onClick={handleImageDelete}
+                >
+                  <span>×</span>
+                </button>
               </div>
               <input
                 type="file"
@@ -183,10 +164,10 @@ const EditProfilePage = () => {
               className={styles.select}
               required
             >
-              <option value="">선택하세요</option>
-              {[...Array(80)].map((_, i) => (
-                <option key={i} value={i + 10}>
-                  {i + 10}세
+
+              {[...Array(90)].map((_, i) => (
+                <option key={i} value={i + 15}>
+                  {i + 15}세
                 </option>
               ))}
             </select>
