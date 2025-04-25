@@ -1,0 +1,77 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 160px);
+}
+
+.signupContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px 40px;
+}
+
+.signupBox {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.col {
+  flex: 1;
+  min-width: 0;
+}
+
+.genderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.required {
+  color: #FF6B00;
+  margin-left: 4px;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: #FF0000;
+  margin-top: 4px;
+} 

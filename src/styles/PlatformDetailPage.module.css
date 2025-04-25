@@ -1,0 +1,353 @@
+.pageContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0px;
+}
+
+.platformInfo {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.platformHeader {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+  background: linear-gradient(to bottom, #f8f9fa, white);
+}
+
+.platformImage {
+  width: 300px;
+  height: 250px;
+  background: #f8f9fa;  background: #f8f9fa;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.platformDetails {
+  flex: 1;
+}
+
+.platformName {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff6b6b;
+  margin-bottom: 16px;
+}
+
+.platformDescription {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.platformMeta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  color: #666;
+}
+
+.platformStats {
+  display: flex;
+  gap: 32px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 600;
+  color: #FF6B00;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.plansSection {
+  padding: 40px 0;
+  border-top: 1px solid #eee;
+}
+
+.plansSection .sectionTitle {
+  padding: 0 40px;
+}
+
+.plansList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 0px 40px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.planCard {
+  width: calc((100% - 120px) / 4); /* 4개의 카드와 3개의 gap(40px)을 고려한 계산 */
+  height: 150px; /* 고정 높이 설정 */
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+}
+
+.planName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.planPrice {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FF6B00;
+}
+
+.statisticsSection {
+  padding: 40px 0;
+  border-top: 1px solid #eee;
+}
+
+.statisticsSection .sectionTitle {
+  padding: 0 40px;
+}
+
+.statisticsCharts {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chartBox {
+  width: 300px;
+  height: 300px;
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chartContainer {
+  flex: 1;
+  width: 100%;
+  position: relative;
+}
+
+.chartTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.statisticsPlaceholder {
+  padding: 40px;
+  text-align: center;
+  color: #999;
+  background: #f8f9fa;
+  margin: 0 40px;
+  border-radius: 12px;
+}
+
+.reviewsSection {
+  padding: 40px 0;
+  border-top: 1px solid #eee;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  margin-bottom: 24px;
+}
+
+.writeReviewButton {
+  background-color: #FF6B00;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.reviewForm {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 0 40px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ratingSelect {
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.ratingButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #ddd;
+  cursor: pointer;
+  letter-spacing: 2px;
+  -webkit-text-stroke: 0.5px #D9D9D9;
+}
+
+.ratingButton.active {
+  color: #FFD700;
+}
+
+.rating {
+  color: #FFD700;
+  letter-spacing: 2px;
+  font-size: 13px;
+  -webkit-text-stroke: 0.3px black;
+  -webkit-text-fill-color: #FFD700;
+}
+
+.reviewTextarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  margin-bottom: 16px;
+  font-family: inherit;
+}
+
+.reviewFormButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 40px;
+}
+
+.reviewCard {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.reviewerName {
+  font-weight: 600;
+  color: #333;
+}
+
+.reviewRating {
+  color: #FF6B00;
+}
+
+.reviewDate {
+  color: #999;
+  font-size: 14px;
+}
+
+.reviewContent {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.reviewFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.recommendButton {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.recommendButton:hover {
+  background: #f1f1f1;
+  border-color: #ccc;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 40px;
+  padding: 0 40px;
+}
+
+.pageButton {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pageButton:hover {
+  background: #f1f1f1;
+  border-color: #ccc;
+}
+
+.activePage {
+  background: #FF6B00;
+  border-color: #FF6B00;
+  color: white;
+}
+
+.activePage:hover {
+  background: #FF6B00;
+  border-color: #FF6B00;
+} 

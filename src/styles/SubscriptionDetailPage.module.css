@@ -1,0 +1,298 @@
+.pageContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0px;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.contentContainer {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+}
+
+/* 플랫폼 정보 섹션 */
+.platformInfo {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.platformHeader {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.platformName {
+  font-size: 24px;
+  color: #ff6b6b;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.platformDetails {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 30px;
+}
+
+.platformImageContainer {
+  flex-shrink: 0;
+  width: 440px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  padding: 10px;
+}
+
+.platformImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.subscriptionDetails {
+  width: 100%;
+  min-width: 0;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.detailRow:last-child {
+  margin-bottom: 0;
+}
+
+.detailLabel {
+  font-weight: 500;
+  color: #555;
+}
+
+.detailValue {
+  font-weight: 600;
+  color: #ff6b6b;
+}
+
+/* 달력 섹션 */
+.calendarContainer {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.calendarTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.calendar {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+.dayNames {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.dayName {
+  padding: 5px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 50%;
+  cursor: default;
+  transition: background-color 0.2s;
+}
+
+.dayPlaceholder {
+  height: 40px;
+}
+
+.today {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.paymentDay {
+  background-color: #ffcc99;
+  color: #333;
+  border: 2px solid #ff6b6b;
+  font-weight: bold;
+}
+
+.calendarNote {
+  margin-top: 15px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.highlightDate {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+/* 버튼 섹션 */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.editButton {
+  min-width: 120px;
+}
+
+.cancelButton {
+  min-width: 120px;
+  border-color: #e74c3c !important;
+  color: #e74c3c !important;
+}
+
+.cancelButton:hover {
+  background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+/* 상태 메시지 */
+.loading, .error, .empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  font-size: 18px;
+  color: #666;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 20px 15px;
+  }
+  
+  .contentContainer {
+    padding: 20px 15px;
+  }
+  
+  .platformDetails {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .platformImageContainer {
+    margin-bottom: 20px;
+  }
+  
+  .subscriptionDetails {
+    width: 100%;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+  
+  .editButton, .cancelButton {
+    width: 100%;
+  }
+}
+
+/* 모달 스타일 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modalTitle {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #e74c3c;
+  font-size: 20px;
+}
+
+.modalMessage {
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+} 

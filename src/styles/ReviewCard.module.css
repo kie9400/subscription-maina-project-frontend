@@ -1,0 +1,131 @@
+.reviewCard {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.profileImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #eaeaea;
+}
+
+.reviewerName {
+  font-weight: 600;
+  color: #333;
+}
+
+.reviewDate {
+  color: #999;
+  font-size: 14px;
+}
+
+.rightSection {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rating {
+  -webkit-text-stroke: 0.5px #D9D9D9;
+  color: #FFD700;
+  letter-spacing: 1px;
+  font-size: 16px;
+}
+
+.menuContainer {
+  position: relative;
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.menuButton:hover {
+  background: #eee;
+}
+
+.menuDropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  min-width: 100px;
+  overflow: hidden;
+}
+
+.menuDropdown button {
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.menuDropdown button:hover {
+  background: #f5f5f5;
+}
+
+.reviewContent {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+}
+
+.reviewFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.recommendButton {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.recommendButton:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+}
+
+.recommendButton.recommended {
+  background-color: #FF6B00;
+  border-color: #FF6B00;
+  color: white;
+}
+
+.recommendButton.recommended:hover {
+  background-color: #e65c00;
+  border-color: #e65c00;
+} 
