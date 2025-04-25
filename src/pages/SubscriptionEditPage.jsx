@@ -10,6 +10,7 @@ import PlatformSearchModal from '../components/PlatformSearchModal';
 import styles from '../styles/SubscriptionEditPage.module.css';
 const BASE_URL = import.meta.env.VITE_S3_URL;
 
+
 const SubscriptionEditPage = () => {
   const { subscriptionId } = useParams();
   const navigate = useNavigate();
@@ -93,7 +94,6 @@ const SubscriptionEditPage = () => {
     }
   }, [platformData, changedPlatform]);
 
-
   // 플랜 선택 핸들러
   const handlePlanSelect = (plan) => {
     setSelectedPlan(plan);
@@ -119,8 +119,13 @@ const SubscriptionEditPage = () => {
       navigate(`/subscription/${subscriptionId}`);
     },
     onError: (error) => {
-      showToast('구독 정보 수정 중 오류가 발생했습니다.', 'error');
-      console.error('구독 수정 오류:', error);
+      if (error.response.status === 409) {
+        showToast('이미 구독중인 플랫폼 입니다.', 'error');
+      } else if (error.response.status === 404) {
+        showToast('이미 취소된 구독 내역입니다.', 'error');
+      } else {
+        showToast('구독 정보 수정 중 오류가 발생했습니다.', 'error');
+      }
     }
   });
 
@@ -168,7 +173,7 @@ const SubscriptionEditPage = () => {
   // 플랜 데이터 확인
   const plans = changedPlatform && platformData?.plans ? platformData.plans : 
                 !changedPlatform && platformData?.plans ? platformData.plans : [];
-                
+
   return (
     <div className={styles.pageContainer}>
       <h1 className={styles.pageTitle}>구독 정보 수정</h1>
@@ -185,14 +190,14 @@ const SubscriptionEditPage = () => {
       <div className={styles.contentContainer}>
         <div className={styles.platformInfo}>
           <div className={styles.platformHeader}>
-            <h2 className={styles.platformName}>{subscriptionData.platformName}</h2>
+            <h2 className={styles.platformName}>{activePlatform.platformName}</h2>
           </div>
           
           <div className={styles.platformDetails}>
             <div className={styles.platformImageContainer}>
               <img 
-                src={`${BASE_URL}${subscriptionData.platformImage}`} 
-                alt={subscriptionData.platformName} 
+                src={`${BASE_URL}${activePlatform.platformImage}`} 
+                alt={activePlatform.platformName} 
                 className={styles.platformImage}
               />
             </div>
@@ -201,18 +206,23 @@ const SubscriptionEditPage = () => {
               <div className={styles.formGroup}>
                 <label className={styles.label}>구독 플랜</label>
                 <div className={styles.planSelector}>
-                  {platformData.plans?.map((plan) => (
-                    <div 
-                      key={`plan-${plan.subsPlanId}`}
-                      className={`${styles.planOption} ${selectedPlan === plan.subsPlanId ? styles.selected : ''}`}
-                      onClick={() => handlePlanSelect(plan)}
-                    >
-                      <h4>{plan.planName}</h4>
-                      <p className={styles.planPrice}>
-                        {plan.billingCycle} {plan.price.toLocaleString()}원
-                      </p>
-                    </div>
-                  ))}
+                  {plans.length > 0 ? (
+                    plans.map((plan) => (
+                      <div 
+                        key={`plan-${plan.subsPlanId}`}
+                        className={`${styles.planOption} ${selectedPlan?.subsPlanId === plan.subsPlanId ? styles.selected : ''}`}
+                        onClick={() => handlePlanSelect(plan)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <h4>{plan.planName}</h4>
+                        <p className={styles.planPrice}>
+                          {plan.billingCycle} {plan.price.toLocaleString()}원
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className={styles.loading}>플랜 정보를 불러오는 중...</div>
+                  )}
                 </div>
               </div>
               

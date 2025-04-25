@@ -178,11 +178,11 @@ const AdminPage = () => {
                     <span>{selectedMember.data.age}세</span>
                   </div>
                   <div className={styles.infoRow}>
-                    <label>가입일</label>
+                    <label>가입일자</label>
                     <span>{new Date(selectedMember.data.createdAt).toLocaleDateString()}</span>
                   </div>
                   <div className={styles.infoRow}>
-                    <label>휴대폰 번호호</label>
+                    <label>휴대폰 번호</label>
                     <span>{selectedMember.data.phoneNumber}</span>
                   </div>
                 </div>
