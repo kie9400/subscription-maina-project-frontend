@@ -71,6 +71,7 @@ const PlatformDetailPage = () => {
       setEditingReview(null);
     },
     onError: (error) => {
+      console.log(error);
       if (error.response?.status === 409) {
         showToast('이미 리뷰를 등록하셨습니다.', 'error');
       } 
@@ -79,6 +80,9 @@ const PlatformDetailPage = () => {
       }
       else if (error.response?.status === 403) {
         showToast('해당 플랫폼에 구독하지 않았습니다.', 'error');
+      }
+      else if (error.response.data.fieldErrors[0].reason === "본문은 200자 이내이어야 합니다.") {
+        showToast('200자 이내로만 작성할 수 있습니다.', 'error');
       }
       else {
         showToast('리뷰 등록에 실패했습니다.', 'error');
