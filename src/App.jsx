@@ -22,6 +22,7 @@ import SubscriptionDetailPage from './pages/SubscriptionDetailPage';
 import SubscriptionEditPage from './pages/SubscriptionEditPage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ScrollToTop from './util/ScrollToTop';
+import AdminPage from './pages/AdminPage';
 import './styles/App.css';
 
 const queryClient = new QueryClient({
@@ -62,6 +63,7 @@ function App() {
                 <Route path="/mypage/edit" element={<EditProfilePage />} />
                 <Route path="/mypage/password" element={<EditPasswordPage />} />
                 <Route path="/mypage/delete" element={<DeleteMemberPage />} />
+                <Route path="/admin" element={<AdminPage />} />
               </Routes>
               <Footer />
             </div>
