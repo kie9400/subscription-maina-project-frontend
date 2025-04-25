@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from '../styles/MainPage.module.css';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const MainPage = () => {
     const { isLoggedIn } = useAuth();
@@ -14,9 +14,10 @@ const MainPage = () => {
 
     // React Query로 데이터 가져오기
     const { data, isLoading, error, isSuccess } = useQuery({
-        queryKey: ['mainPageData', isLoggedIn], // isLoggedIn이 바뀔 때마다 다시 fetch
+        queryKey: ['mainPageData', isLoggedIn],
         queryFn: async () => {
             const response = await instance.get(`/main`);
+            console.log(response.data.data);
             return response.data.data;
         }
     });

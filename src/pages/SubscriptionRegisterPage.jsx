@@ -7,6 +7,7 @@ import { useToast } from '../context/ToastContext';
 import Button from '../components/Button';
 import PlatformSearchModal from '../components/PlatformSearchModal';
 import styles from '../styles/SubscriptionRegisterPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const SubscriptionRegisterPage = () => {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ const SubscriptionRegisterPage = () => {
               {selectedPlatform ? (
                 <div className={styles.selectedPlatform}>
                   <img 
-                    src={`${instance.defaults.baseURL}${selectedPlatform.platformImage}`} 
+                    src={`${BASE_URL}${selectedPlatform.platformImage}`} 
                     alt={selectedPlatform.platformName} 
                     className={styles.platformImage}
                   />

@@ -370,18 +370,20 @@
 }
 
 .platformImgWrapper {
-  width: 115px;
-  height: 115px;
-  padding: 15px;
+  width: 150px;
+  height: 130px;
+  padding: 20px;
   display: flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #f8f9fa;
 }
 
 .platformImage {
-  width: 115px;
-  height: 115px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 0;
 }
@@ -402,7 +404,8 @@
 }
 
 .planName {
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   color: #666;
   margin-bottom: 10px;
 }
@@ -481,8 +484,8 @@
 }
 
 .platformImageWrapper {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -490,12 +493,6 @@
   border: 1px solid #eee;
   margin-bottom: 10px;
   flex-shrink: 0;
-}
-
-.platformImage {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
 }
 
 .platformName {

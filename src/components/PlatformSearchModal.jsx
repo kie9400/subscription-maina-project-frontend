@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '../api/axiosInstance';
 import styles from '../styles/SubscriptionRegisterPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
+
 
 const PlatformSearchModal = ({ isOpen, onClose, onSelect }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -73,7 +75,7 @@ const PlatformSearchModal = ({ isOpen, onClose, onSelect }) => {
               >
                 <div className={styles.categoryCircle}>{
                       <img 
-                          src={`${instance.defaults.baseURL}${category.categoryImage}`} 
+                          src={`${BASE_URL}${category.categoryImage}`} 
                           alt={category.categoryName} 
                           className={styles.categoryImage}
                       />}
@@ -98,7 +100,7 @@ const PlatformSearchModal = ({ isOpen, onClose, onSelect }) => {
                   onClick={() => onSelect(platform)}
                 >
                   <img 
-                    src={`${instance.defaults.baseURL}${platform.platformImage}`} 
+                    src={`${BASE_URL}${platform.platformImage}`} 
                     alt={platform.platformName} 
                     className={styles.platformImage}
                   />

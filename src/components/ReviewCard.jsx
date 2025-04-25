@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
 import ConfirmModal from './ConfirmModal';
 import styles from '../styles/ReviewCard.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const ReviewCard = ({ review, onDelete, onEdit, onRecommend }) => {
   const { user, isLoggedIn } = useAuth();
@@ -42,7 +43,7 @@ const ReviewCard = ({ review, onDelete, onEdit, onRecommend }) => {
     <div className={styles.reviewCard}>
       <div className={styles.reviewHeader}>
         <img 
-          src={`${instance.defaults.baseURL}${review.memberImage}`} 
+          src={`${BASE_URL}${review.memberImage}`} 
           alt={`${review.memberName}의 프로필`} 
           className={styles.profileImage}
         />

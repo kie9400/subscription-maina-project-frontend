@@ -5,6 +5,7 @@ import { instance } from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import styles from '../styles/AdminPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const AdminPage = () => {
   const { isLoggedIn, isAdmin } = useAuth();
@@ -102,7 +103,7 @@ const AdminPage = () => {
                   <td>
                     <div className={styles.profileImageWrapper}>
                       <img 
-                        src={`${instance.defaults.baseURL}${member.image}`} 
+                        src={`${BASE_URL}${member.image}`} 
                         alt={member.name} 
                         className={styles.profileImage}
                       />
@@ -157,7 +158,7 @@ const AdminPage = () => {
               <div className={styles.memberDetail}>
                 <div className={styles.profileSection}>
                   <img 
-                    src={`${instance.defaults.baseURL}${selectedMember.data.image}`} 
+                    src={`${BASE_URL}${selectedMember.data.image}`} 
                     alt={selectedMember.data.name} 
                     className={styles.detailProfileImage}
                   />

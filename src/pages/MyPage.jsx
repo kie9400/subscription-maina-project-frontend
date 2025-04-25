@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import Button from '../components/Button';
 import styles from '../styles/MyPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const MyPage = () => {
   const { isLoggedIn } = useAuth();
@@ -28,6 +29,7 @@ const MyPage = () => {
     },
     enabled: isLoggedIn
   });
+  console.log(profileData);
 
   // 내 상세 정보 조회
   const { data: myInfoData, isLoading: infoLoading } = useQuery({
@@ -66,7 +68,7 @@ const MyPage = () => {
         <div className={styles.sidebar}>
           <div className={styles.profile}>
             <img 
-              src={`${instance.defaults.baseURL}${profileData?.image || '/images/noImage.png'}`} 
+              src={`${BASE_URL}${profileData?.image}`} 
               alt="프로필 이미지" 
               className={styles.profileImage}
             />
@@ -238,7 +240,7 @@ const MySubscription = () => {
             <div className={styles.categoryHeader}>
               <div className={styles.categoryInfo}>
                 <img 
-                  src={`${instance.defaults.baseURL}${category.categoryImage}`} 
+                  src={`${BASE_URL}${category.categoryImage}`} 
                   alt={category.categoryName} 
                   className={styles.categoryImage} 
                 />
@@ -256,13 +258,13 @@ const MySubscription = () => {
                 >
                   <div className={styles.platformImgWrapper}>
                     <img 
-                      src={`${instance.defaults.baseURL}${subscription.platformImage}`} 
+                      src={`${BASE_URL}${subscription.platformImage}`} 
                       alt={subscription.platformName} 
                       className={styles.platformImage} 
                     />
+                    <div className={styles.platformName}>{subscription.platformName}</div>
                   </div>
                   <div className={styles.platformInfo}>
-                    <div className={styles.platformName}>{subscription.platformName}</div>
                     <div className={styles.planName}>{subscription.planName}</div>
                     <div className={styles.monthlyFee}>
                       <span className={styles.billingCycle}>{subscription.billingCycle}</span>
@@ -345,7 +347,7 @@ const MyReview = () => {
             <div className={styles.reviewPlatform}>
               <div className={styles.platformImageWrapper}>
                 <img 
-                  src={`${instance.defaults.baseURL}${review.platformImage}`} 
+                  src={`${BASE_URL}${review.platformImage}`} 
                   alt={review.platformName} 
                   className={styles.platformImage}
                 />

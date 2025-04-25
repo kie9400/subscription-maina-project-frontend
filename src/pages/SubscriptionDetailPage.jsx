@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import Button from '../components/Button';
 import styles from '../styles/SubscriptionDetailPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const SubscriptionDetailPage = () => {
   const { subscriptionId } = useParams();
@@ -167,7 +168,7 @@ const SubscriptionDetailPage = () => {
           <div className={styles.platformDetails}>
             <div className={styles.platformImageContainer}>
               <img 
-                src={`${instance.defaults.baseURL}${data.platformImage}`} 
+                src={`${BASE_URL}${data.platformImage}`} 
                 alt={data.platformName} 
                 className={styles.platformImage}
                 onClick={() => navigate(`/platforms/${data.platformId}`)}

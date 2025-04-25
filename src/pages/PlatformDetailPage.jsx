@@ -10,6 +10,7 @@ import Button from '../components/Button';
 import styles from '../styles/PlatformDetailPage.module.css';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -168,7 +169,7 @@ const PlatformDetailPage = () => {
       <section className={styles.platformInfo}>
         <div className={styles.platformHeader}>
           <img 
-            src={`${instance.defaults.baseURL}${platformData.platformImage}`} 
+            src={`${BASE_URL}${platformData.platformImage}`} 
             alt={platformData.platformName} 
             className={styles.platformImage}
           />

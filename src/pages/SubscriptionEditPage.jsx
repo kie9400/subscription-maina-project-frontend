@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import PlatformSearchModal from '../components/PlatformSearchModal';
 import styles from '../styles/SubscriptionEditPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const SubscriptionEditPage = () => {
   const { subscriptionId } = useParams();
@@ -148,7 +149,7 @@ const SubscriptionEditPage = () => {
           <div className={styles.platformDetails}>
             <div className={styles.platformImageContainer}>
               <img 
-                src={`${instance.defaults.baseURL}${subscriptionData.platformImage}`} 
+                src={`${BASE_URL}${subscriptionData.platformImage}`} 
                 alt={subscriptionData.platformName} 
                 className={styles.platformImage}
               />

@@ -4,6 +4,7 @@ import { instance } from '../api/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import SearchBox from '../components/SearchBox';
 import styles from '../styles/PlatformListPage.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const PlatformListPage = () => {
   const navigate = useNavigate();
@@ -200,7 +201,7 @@ const PlatformListPage = () => {
               <div key={platform.platformId} className={styles.platformCard} 
               onClick={() => navigate(`/platforms/${platform.platformId}`)}>
                 <img 
-                  src={`${instance.defaults.baseURL}${platform.platformImage}`}
+                  src={`${BASE_URL}${platform.platformImage}`}
                   alt={platform.platformName} 
                   className={styles.platformImage}
                 />

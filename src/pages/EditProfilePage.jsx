@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import Button from '../components/Button';
 import styles from '../styles/EditProfile.module.css';
+const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const EditProfilePage = () => {
   const { isLoggedIn } = useAuth();
@@ -24,7 +25,7 @@ const EditProfilePage = () => {
   const [age, setAge] = useState(existingInfoData?.age || '');
   const [gender, setGender] = useState(existingInfoData?.gender || '');
   const [profileImage, setProfileImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(existingData?.image ? `${instance.defaults.baseURL}${existingData.image}` : '');
+  const [imagePreview, setImagePreview] = useState(existingData?.image ? `${BASE_URL}${existingData.image}` : '');
   const [isImageDeleted, setIsImageDeleted] = useState(false);
   
   // 로그인 상태 확인
@@ -112,8 +113,8 @@ const EditProfilePage = () => {
           <div className={styles.profileImageSection}>
             <div className={styles.imageContainer}>
               <img 
-                src={isImageDeleted ? `${instance.defaults.baseURL}/images/noImage.png` 
-                   : (imagePreview || `${instance.defaults.baseURL}/images/noImage.png`)} 
+                src={isImageDeleted ? `${BASE_URL}/noImage.png` 
+                   : (imagePreview || `${BASE_URL}/noImage.png`)} 
                 alt="프로필 이미지" 
                 className={styles.profileImage}
               />
