@@ -17,9 +17,11 @@ const SubscriptionEditPage = () => {
   const queryClient = useQueryClient();
   
   // 모달 컴포넌트에서 뽑아올 상태 관리
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [subscriptionDate, setSubscriptionDate] = useState('');
   const [showPlatformModal, setShowPlatformModal] = useState(false);
+  const [changedPlatform, setChangedPlatform] = useState(false);
 
   // 로그인 상태 확인
   if (!isLoggedIn && !localStorage.getItem('isLoggingOut')) {
@@ -40,17 +42,19 @@ const SubscriptionEditPage = () => {
 
   // 플랫폼 상세 정보 조회
   const { data: platformData, isLoading: isPlatformLoading } = useQuery({
-    queryKey: ['platform', subscriptionData?.platformId],
+    queryKey: ['platform', changedPlatform ? selectedPlatform?.platformId : subscriptionData?.platformId],
     queryFn: async () => {
-      const response = await instance.get(`/platforms/${subscriptionData.platformId}`);
+      const platformId = changedPlatform ? selectedPlatform?.platformId : subscriptionData?.platformId;
+      if (!platformId) return null;
+      const response = await instance.get(`/platforms/${platformId}`);
       return response.data.data;
     },
-    enabled: !!subscriptionData?.platformId && isLoggedIn
+    enabled: !!(changedPlatform ? selectedPlatform?.platformId : subscriptionData?.platformId) && isLoggedIn
   });
 
   // 초기 데이터 설정
   useEffect(() => {
-    if (subscriptionData) {
+    if (subscriptionData && !changedPlatform && platformData?.plans) {
       // 구독 시작일 설정
       if (subscriptionData.subscriptionStartAt) {
         setSubscriptionDate(subscriptionData.subscriptionStartAt.split('T')[0]);
@@ -58,20 +62,46 @@ const SubscriptionEditPage = () => {
       
       // 현재 선택된 플랜 설정
       if (subscriptionData.subsPlanId) {
-        setSelectedPlan(subscriptionData.subsPlanId);
+        // 현재 플랜 찾기
+        const currentPlan = platformData.plans.find(plan => plan.subsPlanId === subscriptionData.subsPlanId);
+        if (currentPlan) {
+          setSelectedPlan(currentPlan);
+        } else if (platformData.plans.length > 0) {
+          // 기존 플랜을 찾을 수 없는 경우 첫 번째 플랜 선택
+          setSelectedPlan(platformData.plans[0]);
+        }
+      }
+      
+      // 초기 플랫폼 설정
+      setSelectedPlatform({
+        platformId: subscriptionData.platformId,
+        platformName: subscriptionData.platformName,
+        platformImage: subscriptionData.platformImage,
+        categoryName: subscriptionData.categoryName
+      });
+    }
+  }, [subscriptionData, changedPlatform, platformData]);
+
+  // 플랫폼 데이터가 로드되었을 때 플랜 선택 초기화
+  useEffect(() => {
+    if (platformData && platformData.plans && platformData.plans.length > 0) {
+      // 플랜이 선택되지 않았거나 플랫폼이 변경된 경우 첫 번째 플랜 선택
+      if (!selectedPlan || changedPlatform) {
+        setSelectedPlan(platformData.plans[0]);
       }
     }
-  }, [subscriptionData]);
+  }, [platformData, changedPlatform]);
 
   // 플랜 선택 핸들러
   const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan.subsPlanId);
+    setSelectedPlan(plan);
   };
 
   // 모달에서 플랫폼 선택 시 처리
   const handlePlatformSelect = (platform) => {
     setSelectedPlatform(platform);
     setSelectedPlan(null);
+    setChangedPlatform(true);
     setShowPlatformModal(false);
   };
 
@@ -107,8 +137,8 @@ const SubscriptionEditPage = () => {
     }
     
     updateSubscription.mutate({
-      platformId: subscriptionData.platformId,
-      subsPlanId: selectedPlan,
+      platformId: changedPlatform ? selectedPlatform.platformId : subscriptionData.platformId,
+      subsPlanId: selectedPlan.subsPlanId,
       subscriptionAt: subscriptionDate
     });
   };
@@ -118,13 +148,24 @@ const SubscriptionEditPage = () => {
     navigate(`/subscription/${subscriptionId}`);
   };
 
-  if (isSubscriptionLoading || isPlatformLoading) {
+  if (isSubscriptionLoading || (isPlatformLoading && !changedPlatform)) {
     return <div className={styles.loading}>로딩 중...</div>;
   }
 
-  if (!subscriptionData || !platformData) {
+  if (!subscriptionData && !changedPlatform) {
     return <div className={styles.error}>구독 정보를 찾을 수 없습니다.</div>;
   }
+
+  const activePlatform = changedPlatform ? selectedPlatform : {
+    platformId: subscriptionData.platformId,
+    platformName: subscriptionData.platformName,
+    platformImage: subscriptionData.platformImage,
+    categoryName: subscriptionData.categoryName
+  };
+
+  // 플랜 데이터 확인
+  const plans = changedPlatform && platformData?.plans ? platformData.plans : 
+                !changedPlatform && platformData?.plans ? platformData.plans : [];
 
   return (
     <div className={styles.pageContainer}>
@@ -142,14 +183,14 @@ const SubscriptionEditPage = () => {
       <div className={styles.contentContainer}>
         <div className={styles.platformInfo}>
           <div className={styles.platformHeader}>
-            <h2 className={styles.platformName}>{subscriptionData.platformName}</h2>
+            <h2 className={styles.platformName}>{activePlatform.platformName}</h2>
           </div>
           
           <div className={styles.platformDetails}>
             <div className={styles.platformImageContainer}>
               <img 
-                src={`${instance.defaults.baseURL}${subscriptionData.platformImage}`} 
-                alt={subscriptionData.platformName} 
+                src={`${instance.defaults.baseURL}${activePlatform.platformImage}`} 
+                alt={activePlatform.platformName} 
                 className={styles.platformImage}
               />
             </div>
@@ -158,18 +199,23 @@ const SubscriptionEditPage = () => {
               <div className={styles.formGroup}>
                 <label className={styles.label}>구독 플랜</label>
                 <div className={styles.planSelector}>
-                  {platformData.plans?.map((plan) => (
-                    <div 
-                      key={`plan-${plan.subsPlanId}`}
-                      className={`${styles.planOption} ${selectedPlan === plan.subsPlanId ? styles.selected : ''}`}
-                      onClick={() => handlePlanSelect(plan)}
-                    >
-                      <h4>{plan.planName}</h4>
-                      <p className={styles.planPrice}>
-                        {plan.billingCycle} {plan.price.toLocaleString()}원
-                      </p>
-                    </div>
-                  ))}
+                  {plans.length > 0 ? (
+                    plans.map((plan) => (
+                      <div 
+                        key={`plan-${plan.subsPlanId}`}
+                        className={`${styles.planOption} ${selectedPlan?.subsPlanId === plan.subsPlanId ? styles.selected : ''}`}
+                        onClick={() => handlePlanSelect(plan)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <h4>{plan.planName}</h4>
+                        <p className={styles.planPrice}>
+                          {plan.billingCycle} {plan.price.toLocaleString()}원
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className={styles.loading}>플랜 정보를 불러오는 중...</div>
+                  )}
                 </div>
               </div>
               
