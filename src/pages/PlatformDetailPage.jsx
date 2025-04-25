@@ -72,7 +72,6 @@ const PlatformDetailPage = () => {
       setEditingReview(null);
     },
     onError: (error) => {
-      console.log(error);
       if (error.response?.status === 409) {
         showToast('이미 리뷰를 등록하셨습니다.', 'error');
       } 

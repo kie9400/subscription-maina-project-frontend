@@ -29,7 +29,6 @@ const MyPage = () => {
     },
     enabled: isLoggedIn
   });
-  console.log(profileData);
 
   // 내 상세 정보 조회
   const { data: myInfoData, isLoading: infoLoading } = useQuery({

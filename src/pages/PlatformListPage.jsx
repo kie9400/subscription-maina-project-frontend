@@ -38,7 +38,6 @@ const PlatformListPage = () => {
     queryFn: async () => {
       const res = await instance.get('/categories');
       return res.data.data;
-      console.log("요청함");
     },
     staleTime: Infinity,
   });

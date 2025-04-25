@@ -56,7 +56,6 @@ const VerificationPage = () => {
     setIsEmailSending(true); // 버튼 즉시 비활성화
 
     try {
-      console.log('이메일 전송 시도:', email);
       const response = await instance.post('/members/send-email', { email });
       console.log('이메일 전송 응답:', response);
       showToast('이메일 전송에 성공했습니다.');

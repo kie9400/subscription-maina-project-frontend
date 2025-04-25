@@ -17,7 +17,6 @@ const MainPage = () => {
         queryKey: ['mainPageData', isLoggedIn],
         queryFn: async () => {
             const response = await instance.get(`/main`);
-            console.log(response.data.data);
             return response.data.data;
         }
     });
