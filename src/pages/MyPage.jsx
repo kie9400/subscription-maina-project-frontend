@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
@@ -279,13 +279,125 @@ const MySubscription = () => {
   );
 };
 
-// 내 리뷰내역 컴포넌트 (나중에 구현)
+// 내 리뷰내역 컴포넌트
 const MyReview = () => {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+  const queryClient = useQueryClient();
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const { data: reviewsData, isLoading: reviewsLoading } = useQuery({
+    queryKey: ['mypage', 'reviews', currentPage],
+    queryFn: async () => {
+      const response = await instance.get(`/mypage/reviews?page=${currentPage}&size=${pageSize}`);
+      return response.data;
+    },
+    enabled: isLoggedIn
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async ({ platformId, reviewId }) => {
+      return await instance.delete(`/platforms/${platformId}/reviews/${reviewId}`);
+    },
+    onSuccess: () => {
+      showToast('리뷰가 삭제되었습니다.');
+      //리뷰 삭제가 성공하면 이 콜백함수에서 새로고침침
+      queryClient.invalidateQueries(['mypage', 'reviews']);
+    },
+    onError: (error) => {
+      showToast('리뷰 삭제에 실패했습니다: ' + (error.response?.data?.message || '오류가 발생했습니다.'), 'error');
+    }
+  });
+
+  const handleDeleteReview = (platformId, reviewId, event) => {
+    event.stopPropagation(); // 클릭 이벤트 전파 방지
+    if (window.confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
+      deleteMutation.mutate({ platformId, reviewId });
+    }
+  };
+
+  const handleReviewClick = (platformId) => {
+    navigate(`/platforms/${platformId}`);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  if (reviewsLoading) {
+    return <div className={styles.loading}>리뷰 내역을 불러오는 중...</div>;
+  }
+
+  if (!reviewsData || !reviewsData.data || reviewsData.data.length === 0) {
+    return <div className={styles.emptyState}>작성한 리뷰가 없습니다.</div>;
+  }
+
   return (
-    <div className={styles.reviewContainer}>
-      <p>리뷰 내역 페이지는 준비 중입니다.</p>
+    <div className={styles.reviewsContainer}>
+      <div className={styles.reviewsList}>
+        {reviewsData.data.map((review) => (
+          <div 
+            key={review.reviewId} 
+            className={styles.reviewItem}
+            onClick={() => handleReviewClick(review.platformId)}
+          >
+            <div className={styles.reviewPlatform}>
+              <div className={styles.platformImageWrapper}>
+                <img 
+                  src={`${instance.defaults.baseURL}${review.platformImage}`} 
+                  alt={review.platformName} 
+                  className={styles.platformImage}
+                />
+              </div>
+              <div className={styles.platformName}>{review.platformName}</div>
+            </div>
+            <div className={styles.reviewContent}>
+              <div className={styles.reviewHeader}>
+                <div className={styles.rating}>
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className={i < review.rating ? styles.starFilled : styles.starEmpty}>★</span>
+                  ))}
+                </div>
+              </div>
+              <p>{review.content}</p>
+              <div className={styles.reviewActions}>
+                <button 
+                  className={styles.deleteButton}
+                  onClick={(e) => handleDeleteReview(review.platformId, review.reviewId, e)}
+                >
+                  삭제
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {reviewsData.pageInfo && reviewsData.pageInfo.totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button 
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={styles.pageButton}
+          >
+            이전
+          </button>
+          <span className={styles.pageInfo}>
+            {currentPage} / {reviewsData.pageInfo.totalPages}
+          </span>
+          <button 
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === reviewsData.pageInfo.totalPages}
+            className={styles.pageButton}
+          >
+            다음
+          </button>
+        </div>
+      )}
     </div>
   );
 };
+
 
 export default MyPage;
