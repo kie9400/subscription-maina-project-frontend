@@ -1,16 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { instance } from '../api/axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from '../styles/MainPage.module.css';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
+import gamePassBanner from '../assets/images/gamePassBanner.png';
+import netflixBanner from '../assets/images/netflixBanner.png';
+import shinsegaeBanner from '../assets/images/shinsegaeBanner.png';
 const BASE_URL = import.meta.env.VITE_S3_URL;
 
 const MainPage = () => {
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const [currentBanner, setCurrentBanner] = useState(0);
+    const bannerInterval = useRef(null);
+    
+    const banners = [
+        { id: 0, image: netflixBanner, link: '/platforms/1' },
+        { id: 1, image: shinsegaeBanner, link: '/platforms/22' },
+        { id: 2, image: gamePassBanner, link: '/platforms/28' },
+    ];
+
+    useEffect(() => {
+        bannerInterval.current = setInterval(() => {
+            setCurrentBanner(prev => (prev + 1) % banners.length);
+        }, 15000); // 15초 마다 자동으로 회전
+
+        return () => clearInterval(bannerInterval.current);
+    }, []);
+    
+    const handleBannerClick = (link) => {
+        navigate(link);
+    };
+
+    const handlePrevBanner = (e) => {
+        e.stopPropagation(); 
+        e.preventDefault();
+        setCurrentBanner(prev => (prev - 1 + banners.length) % banners.length);
+        clearInterval(bannerInterval.current);
+        bannerInterval.current = setInterval(() => {
+            setCurrentBanner(prev => (prev + 1) % banners.length);
+        }, 15000);
+    };
+    
+    const handleNextBanner = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setCurrentBanner(prev => (prev + 1) % banners.length);
+        clearInterval(bannerInterval.current);
+        bannerInterval.current = setInterval(() => {
+            setCurrentBanner(prev => (prev + 1) % banners.length);
+        }, 15000);
+    };
 
     // React Query로 데이터 가져오기
     const { data, isLoading, error, isSuccess } = useQuery({
@@ -49,6 +92,52 @@ const MainPage = () => {
 
     return (
         <div className={styles.mainContainer}>
+            <section className={styles.bannerSection}>
+                <div className={styles.bannerContainer}>
+                    {banners.map((banner, index) => (
+                        <div 
+                            key={banner.id}
+                            className={`${styles.banner} ${currentBanner === index ? styles.activeBanner : ''}`}
+                            onClick={() => handleBannerClick(banner.link)}
+                        >
+                            <img 
+                                src={banner.image} 
+                                alt={`Banner ${index + 1}`}
+                                className={styles.bannerImage}
+                            />
+                        </div>
+                    ))}
+                    
+                    <div className={styles.bannerControls}>
+                        <button 
+                            className={styles.navButton} 
+                            onClick={handlePrevBanner}
+                            aria-label="이전 배너"
+                        >
+                            &lt;
+                        </button>
+                        <div className={styles.navDivider}></div>
+                        <button 
+                            className={`${styles.navButton} ${styles.navButtonRight}`} 
+                            onClick={handleNextBanner}
+                            aria-label="다음 배너"
+                        >
+                            &gt;
+                        </button>
+                    </div>
+                    
+                    <div className={styles.bannerDots}>
+                        {banners.map((banner, index) => (
+                            <span 
+                                key={`dot-${banner.id}`}
+                                className={`${styles.dot} ${currentBanner === index ? styles.activeDot : ''}`}
+                                onClick={() => setCurrentBanner(index)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+            
             <section className={styles.categorySection}>
                 <h2 className={styles.sectionTitle}>전체 카테고리</h2>
                 <div className={styles.categoryGrid}>
