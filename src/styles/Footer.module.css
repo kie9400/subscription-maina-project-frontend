@@ -2,11 +2,8 @@
 
 .footer {
     background-color: #f8f9fa;
-    color: #333;
-    margin-top: 80px;
     padding: 2rem 0;
-    width: 100%;
-    border-top: 1px solid #e9ecef;
+    margin-top: auto;
 }
 
 .footerContent {
@@ -25,23 +22,29 @@
 
 .logo {
     height: 40px;
+    width: auto;
 }
 
 .linksSection {
     display: flex;
-    gap: 1rem;
-    align-items: center;
+    gap: 2rem;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.linksSection span {
-    color: #333;
+.footerLink {
+    color: #666;
+    text-decoration: none;
     font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footerLink:hover {
+    color: #333;
 }
 
 .copyrightSection {
-    color: #666000;
+    color: #999;
     font-size: 0.8rem;
     text-align: center;
 }
@@ -60,4 +63,12 @@
 
 .socialLinks a:hover {
     color: #999;
+}
+
+@media (max-width: 768px) {
+    .linksSection {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
 }
