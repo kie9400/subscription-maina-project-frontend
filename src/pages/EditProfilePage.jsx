@@ -96,7 +96,11 @@ const EditProfilePage = () => {
       navigate('/mypage');
     },
     onError: (error) => {
-      showToast('프로필 업데이트에 실패했습니다: ' + (error.response?.data?.message || '오류가 발생했습니다.'), 'error');
+      if(error.response?.data?.message === '이미 존재합니니다.'){
+        showToast('이미 등록된 이름(닉네임)입니다.', 'error');
+      }else{
+        showToast('프로필 업데이트에 실패했습니다: ' + (error.response?.data?.message || '오류가 발생했습니다.'), 'error');
+      }
     }
   });
 
