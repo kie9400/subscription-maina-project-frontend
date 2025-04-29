@@ -116,7 +116,12 @@ const LoginPage = () => {
         </form>
         <div className={styles.links}>
           <p className={styles.helpText}>
-            아이디를 잃어버리셨나요? <span onClick={() => navigate('/find_id')} className={styles.link}>아이디 찾기</span>
+            아이디를 잊어버리셨나요?<span onClick={() => navigate('/find_id')} className={styles.link}>아이디 찾기</span>
+          </p>
+        </div>
+        <div className={styles.links}>
+          <p className={styles.helpText}>
+            비밀번호를 잊어버리셨나요?<span onClick={() => navigate('/find_pw')} className={styles.link}>비밀번호 찾기</span>
           </p>
         </div>
         <div className={styles.links}>

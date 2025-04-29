@@ -23,6 +23,7 @@ import SubscriptionEditPage from './pages/SubscriptionEditPage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ScrollToTop from './util/ScrollToTop';
 import AdminPage from './pages/AdminPage';
+import FindPwPage from './pages/FindPwPage';
 import './styles/App.css';
 
 const queryClient = new QueryClient({
@@ -54,6 +55,7 @@ function App() {
                 <Route path="/signup/email" element={<VerificationPage />} />
                 <Route path="/signup/info" element={<SignupInfoPage />} />
                 <Route path="/find_id" element={<FindIdPage />} />
+                <Route path="/find_pw" element={<FindPwPage />} />
                 <Route path="/platforms" element={<PlatformListPage />} />
                 <Route path="/platforms/:platformId" element={<PlatformDetailPage />} />
                 <Route path="/subscription" element={<SubscriptionRegisterPage />} />
