@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { instance } from '../api/axiosInstance';
 import { useToast } from '../context/ToastContext';
 import Input from '../components/Input';
@@ -6,12 +7,18 @@ import Button from '../components/Button';
 import styles from '../styles/FindPwPage.module.css';
 
 const FindPwPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     name: '',
     phoneNumber: ''
   });
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({
+    email: '',
+    name: '',
+    phoneNumber: ''
+  });
+  const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToast();
 
   const formatPhoneNumber = (value) => {
@@ -29,41 +36,70 @@ const FindPwPage = () => {
         ...prev,
         [name]: formatPhoneNumber(value)
       }));
+    } else if (name === 'email' || name === 'name') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value.replace(/\s/g, '')
+      }));
     } else {
       setFormData(prev => ({
         ...prev,
         [name]: value
       }));
     }
-    setError('');
+    setErrors(prev => ({
+      ...prev,
+      [name]: ''
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!formData.email || !formData.name || !formData.phoneNumber) {
-      setError('모든 필드를 입력해주세요');
+      setErrors({
+        email: !formData.email ? '이메일을 입력해주세요' : '',
+        name: !formData.name ? '이름을 입력해주세요' : '',
+        phoneNumber: !formData.phoneNumber ? '전화번호를 입력해주세요' : ''
+      });
       return;
     }
 
     const phoneRegex = /^010-\d{4}-\d{4}$/;
     if (!phoneRegex.test(formData.phoneNumber)) {
-      setError('올바른 전화번호를 입력해주세요');
+      setErrors(prev => ({
+        ...prev,
+        phoneNumber: '올바른 전화번호를 입력해주세요'
+      }));
       return;
     }
 
+    setIsLoading(true);
     try {
       await instance.post('/members/findpw', formData);
       showToast('임시비밀번호가 전송되었습니다.');
-      window.location.href = '/login';
+      navigate('/login');
     } catch (error) {
-      if (error.response?.status === 404) {
-        setError('일치하는 회원정보가 없습니다');
-        showToast('일치하는 회원정보가 없습니다.', 'error');
+      if (error.response?.data?.message === '회원을 찾을 수 없습니다.') {
+        setErrors(prev => ({
+          ...prev,
+          email: '가입되지 않은 이메일입니다. 확인해주세요'
+        }));
+      } else if (error.response?.data?.message === '이름을 찾을 수 없습니다.') {
+        setErrors(prev => ({
+          ...prev,
+          name: '이름을 찾을 수 없습니다.'
+        }));
+      } else if (error.response?.data?.message === '휴대폰 번호를 찾을 수 없습니다.') {
+        setErrors(prev => ({
+          ...prev,
+          phoneNumber: '휴대폰 번호를 찾을 수 없습니다.'
+        }));
       } else {
-        setError('비밀번호 찾기에 실패했습니다. 다시 시도해주세요');
         showToast('비밀번호 찾기에 실패했습니다.', 'error');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,6 +116,8 @@ const FindPwPage = () => {
             onChange={handleChange}
             placeholder="이메일을 입력하세요"
             required
+            error={errors.email}
+            disabled={isLoading}
           />
           <Input
             label="이름"
@@ -89,6 +127,8 @@ const FindPwPage = () => {
             onChange={handleChange}
             placeholder="이름을 입력하세요"
             required
+            error={errors.name}
+            disabled={isLoading}
           />
           <Input
             label="전화번호"
@@ -99,14 +139,16 @@ const FindPwPage = () => {
             placeholder="숫자만 입력하세요"
             maxLength={13}
             required
-            error={error}
+            error={errors.phoneNumber}
+            disabled={isLoading}
           />
           <Button 
             type="submit" 
             fullWidth
             size="large"
+            disabled={isLoading}
           >
-            비밀번호 찾기
+            {isLoading ? '전송 중...' : '비밀번호 찾기'}
           </Button>
         </form>
       </div>
