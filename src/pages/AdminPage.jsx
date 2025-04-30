@@ -599,7 +599,7 @@ const AdminPage = () => {
                             onChange={(e) => handlePlanInputChange(index, e)}
                           >
                             <option value="월">월</option>
-                            <option value="년">년</option>
+                            <option value="연">연</option>
                           </select>
                         </div>
                       </div>
