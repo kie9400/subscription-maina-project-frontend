@@ -30,6 +30,12 @@ const AdminPage = () => {
 
   const pageSize = 10;
 
+  if (!isLoggedIn && !localStorage.getItem('isLoggingOut')) {
+    showToast('로그인이 필요한 서비스입니다.', 'error');
+    navigate('/login');
+    return null; 
+  }
+  
   // 권한 체크
   React.useEffect(() => {
     if (!isAdmin) {
