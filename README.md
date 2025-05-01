@@ -84,9 +84,13 @@
 | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/93ae738d-1732-4c1d-8644-5ac32e95bb50" width="380" height="230"/> | <img src="https://github.com/user-attachments/assets/c0477301-aac9-42bc-82a5-3bf699e13cef" width="380" height="230"/> |
 
-| 관리자페이지(플랫폼 목록 조회) | 관리자페이지(플랫폼 삭제) |
+| 관리자페이지(플랫폼 목록 조회) | 관리자페이지(플랫폼 등록) |
 | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/64b15038-980a-44af-8ae2-47062e4eae5e" width="380" height="230"/> | <img src="https://github.com/user-attachments/assets/888d5495-8036-4a7e-abc8-2a99d6b40130" width="380" height="230"/> |
+
+| 관리자페이지(플랫폼 삭제) | 
+| :---: |
+| <img src="https://github.com/user-attachments/assets/f26d0d1d-a344-4622-bf55-5fb590dd3fb1" width="380" height="230"/> | 
 
 ---
 
