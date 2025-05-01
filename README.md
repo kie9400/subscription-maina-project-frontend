@@ -11,27 +11,28 @@
 
 그리하여 사용자가 자신의 구독내역을 효율적으로 관리할 수 있도록 사용자 친화적인 구독 관리 서비스를 제공하는 것이 목표입니다. 
 
-## 📚 목차
+## 📚목차
 - [📰 프로젝트 개요](#프로젝트-개요)
 - [📌 프로젝트 소개](#프로젝트-소개)
 - [📄 기술 시연](#기술-시연)
-- [문서 링크 모음](#문서-링크-모음)
+- [📄 문서 링크 모음](#문서-링크-모음)
 - [📊 ERD](#erd)
 - [🛠️ 기술 스택](#기술-스택)
 - [📑 기타 및 출처](#기타-및-출처)
   
 ---
-## 📰 프로젝트 개요
+
+## 📰프로젝트 개요
 
 - **프로젝트 명** : 구독 매니아
 - **프로젝트 개발자** : 송호근 (BE/FE) | 1인
 - **진행 기간** : 2025.04.06 ~ 25.05.01
 - **서비스 링크** : [구독 매니아](http://subsmania.shop)
-- **백엔드 Repo 링크** : [LINK](https://github.com/kie9400/subscription-mania-project-backend)
+- **프론트 엔드 Repo 링크** : [LINK](https://github.com/kie9400/subscription-maina-project-frontend)
 
 ---
 
-## 📌 프로젝트 소개
+## 📌프로젝트 소개
 **구독 매니아**는 사용자가 직접 구독 중인 서비스를 등록하고,  
 결제일 알림을 이메일로 받아볼 수 있는 **개인 구독 관리 서비스**입니다.
 
@@ -42,7 +43,7 @@
 
 ---
 
-## 📺 기술 시연
+## 📺기술 시연
 | 회원가입(이메일인증) | 회원가입(정보입력) |
 | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/f9cc8b49-9f9e-4652-b090-2b4db274f2b2" width="380" height="230"/> | <img src="https://github.com/user-attachments/assets/f7e65bab-866c-4fdb-bc89-d3bcb89cba84" width="380" height="230"/> |
@@ -89,7 +90,7 @@
 
 ---
 
-## 📄 문서 링크 모음
+## 📄문서 링크 모음
 👉 [📄 요구사항 명세서](https://docs.google.com/spreadsheets/d/11YX8Xix8UgedELQxZVVrAmBjwvqnHhks1MJZG7j92mM/edit?gid=1034760520#gid=1034760520)
 
 👉 [🖌 와이어 프레임](https://www.figma.com/design/3A81g004CjFSzGUwJYui4K/%EA%B5%AC%EB%8F%85%EB%A7%A4%EB%8B%88%EC%95%84?node-id=0-1&p=f&t=Jk7p2ywlCuIzTUhI-0)
@@ -97,14 +98,14 @@
 
 ---
 
-## 📊 ERD
+## 📊ERD
 <img src="https://github.com/user-attachments/assets/0552df77-3634-4957-af77-8fc025aced5d" alt="ERD" width="1000"/>
 
 👉 [LINK](https://www.erdcloud.com/d/YyJTwMGCSLFs6Fb5b)
 
 ---
 
-## 🛠 기술 스택
+## 🛠기술 스택
 
 
 <div align=center> 
@@ -149,4 +150,5 @@
 ---
 
 ## 📑기타 및 출처
+
 아이콘 출처 : https://www.iconfinder.com/
