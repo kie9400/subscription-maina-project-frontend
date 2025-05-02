@@ -28,7 +28,7 @@
 - **프로젝트 개발자** : 송호근 (BE/FE) | 1인
 - **진행 기간** : 2025.04.06 ~ 25.05.01
 - **서비스 링크** : [구독 매니아](http://subsmania.shop)
-- **프론트 엔드 Repo 링크** : [LINK](https://github.com/kie9400/subscription-maina-project-frontend)
+- **백엔드 Repo 링크** : [LINK](https://github.com/kie9400/subscription-maina-project-backend)
 
 ---
 
